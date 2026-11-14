@@ -105,6 +105,7 @@ family-video/
 ├─ app/                        # Go (未作成)
 │  ├─ cmd/api/main.go          # Lambda 用とローカル用の起動を切り替える
 │  ├─ cmd/migrate/main.go
+│  ├─ cmd/task/                # 手動で実行する作業 (サブコマンド。入口は 1 つ)
 │  ├─ internal/{auth,video,db,sign,web}/
 │  ├─ templates/               # html/template (go:embed でバイナリに含める)
 │  └─ migrations/
@@ -122,7 +123,7 @@ family-video/
 │  ├─ dependabot.yml
 │  └─ workflows/
 │     ├─ claude.yml            # @claude への応答 (既存)
-│     └─ ci.yml  deploy.yml    # (未作成)
+│     └─ ci.yml  deploy.yml  task.yml    # (未作成。task.yml は手動実行の作業用)
 ├─ CLAUDE.md
 ├─ LICENSE                     # MIT
 └─ README.md
@@ -135,6 +136,7 @@ family-video/
 - main への直接 push は禁止し、PR を必須にする。CI が通らないとマージできないようにする
 - 必須の承認数は 0。Claude の指摘を確認してから、自分でマージする
 - 更新は Dependabot の PR で確認してから取り込む
+- 手動で実行する作業は、`task.yml` (workflow_dispatch) で `cmd/task` を実行する。OIDC のロールで接続し、`prod` は Environment の承認を通す ([Operations](specs/operations.md))
 - リポジトリの設定で、Issue を作れる人を書き込み権限のある人だけに制限する
 - 「GitHub Actions に PR の作成と承認を許可する」はオフにする
 - PR の作成をコラボレーターのみに制限した状態で、Dependabot の PR が作られることを確認する (#9)
