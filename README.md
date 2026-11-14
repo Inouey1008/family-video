@@ -13,6 +13,7 @@
 - PR や Issue で `@claude` と書くと Claude が応答する
 - GitHub Actions の更新は Dependabot が月 1 回 PR を作る
 - 要件は [docs/prd.md](docs/prd.md) にまとめている
+- 設計は [docs/architecture.md](docs/architecture.md) と [docs/adr/](docs/adr/) を参照
 
 ## License
 
