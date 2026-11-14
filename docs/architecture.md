@@ -33,7 +33,7 @@ flowchart LR
 
   PWA --> CF
   CF -->|"/static/*"| S3S
-  CF -->|"/sw.js"| S3S
+  CF -->|"/service-worker.js"| S3S
   CF -->|"/media/*"| S3M
   CF -->|"/*"| APIGW
   APIGW --> L
@@ -49,7 +49,7 @@ flowchart LR
 | パス | 振り分け先 | 備考 |
 |---|---|---|
 | `/static/*` | S3 | htmx・CSS・JS・manifest。OAC (CloudFront からだけ読める) |
-| `/sw.js` | S3 | Service Worker。scope を `/` にするため、ルートのパスで配信する。`/static/*` と同じ S3 から返すビヘイビアを 1 つ足す |
+| `/service-worker.js` | S3 | Service Worker。scope を `/` にするため、ルートのパスで配信する。`/static/*` と同じ S3 から返すビヘイビアを 1 つ足す |
 | `/media/*` | S3 | 動画とサムネイル。OAC と署名付き URL |
 | `/*` | API Gateway → Lambda | 画面 (html/template)・`/auth/*`・`/api/*` |
 
@@ -112,7 +112,7 @@ family-video/
 ├─ static/                     # S3 の /static/* に同期 (未作成)
 │  ├─ htmx.min.js              # 2.0.11 を固定して同梱
 │  ├─ upload.js  app.css
-│  └─ manifest.webmanifest  sw.js   # sw.js は CloudFront の /sw.js から配信する
+│  └─ manifest.webmanifest  service-worker.js   # service-worker.js は CloudFront の /service-worker.js から配信する
 ├─ docs/
 │  ├─ prd.md
 │  ├─ architecture.md

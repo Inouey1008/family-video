@@ -31,7 +31,7 @@ sequenceDiagram
 
 - 署名は CloudFront の鍵で行い、秘密鍵は SSM Parameter Store に置く
 - シークは HTTP の Range リクエストで行う。再生の開始時に、再読み込みなどの操作を求めない
-- Service Worker (`/sw.js`) がキャッシュするのは画面の部品だけで、動画はキャッシュしない
+- Service Worker (`/service-worker.js`) がキャッシュするのは画面の部品だけで、動画はキャッシュしない
 
 ## Download
 
