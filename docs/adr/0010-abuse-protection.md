@@ -31,7 +31,7 @@
 - Terraform では `throttling_burst_limit` と `throttling_rate_limit` を必ず明記する。消すと 0 になり、すべての通信がブロックされる。
 - 海外へ旅行するときは、Terraform で一時的に旅行先の国を許可リストに加える。
 - iCloud プライベートリレーを使う端末が日本と判定されるかを、リリース前に確認する。
-- 具体的な値と実装の細目は [設計書](../architecture.md) にまとめる。値は運用しながら調整する。
+- 具体的な値と実装の細目は [設計書](../specs/security.md) にまとめる。値は運用しながら調整する。
 
 ## References
 
