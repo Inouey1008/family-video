@@ -14,6 +14,7 @@
 
 - 処理は AWS Lambda にし、OS-only ランタイム (`provided.al2023`) に zip でデプロイする。Go のバイナリをそのまま OS の上で動かし、OS の保守は AWS が行う。
 - VPC・NAT ゲートウェイは使わない。ほかの AWS のサービスには、VPC を通さずに IAM の認証で接続する。
+- リージョンは東京にする。家族に物理的に近く、通信の遅れが小さい。
 
 ## Alternatives
 
@@ -29,8 +30,7 @@
 ## Consequences
 
 - `provided.al2023` の廃止予定日は 2029-06-30 (2026-11-15 に確認)。それまでに次の OS-only ランタイムへ移る。
-- Lambda のペイロード制限 (6 MB) を超える動画は、Lambda を通さずに送る ([ADR-0008](0008-entry-delivery.md))。
-- ほかの部品も AWS でそろえる ([ADR-0006](0006-cloud-aws.md))。
+- Lambda のペイロード制限 (6 MB) を超える動画は、Lambda を通さずに送る ([ADR-0007](0007-entry-delivery.md))。
 
 ## References
 

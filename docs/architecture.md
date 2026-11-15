@@ -13,7 +13,7 @@
 
 ## Architecture
 
-判断の理由: [ADR-0001](adr/0001-serverless.md) / [ADR-0005](adr/0005-lambda.md) / [ADR-0006](adr/0006-cloud-aws.md) / [ADR-0008](adr/0008-entry-delivery.md)
+判断の理由: [ADR-0001](adr/0001-serverless.md) / [ADR-0005](adr/0005-lambda.md) / [ADR-0007](adr/0007-entry-delivery.md)
 
 入り口は CloudFront の 1 つで、パスごとに S3 と API へ振り分ける (同一オリジンなので CORS は要らない)。アップロードだけは署名付き URL で S3 に直接送る。
 
@@ -42,19 +42,19 @@ flowchart LR
 
 | 区分 | 技術 | ADR |
 |---|---|---|
-| FE | `html/template` + htmx。MPA (HTML はサーバーが組み立てる) | [0003](adr/0003-mpa.md) / [0007](adr/0007-htmx.md) |
+| FE | `html/template` + htmx。MPA (HTML はサーバーが組み立てる) | [0003](adr/0003-mpa.md) / [0006](adr/0006-htmx.md) |
 | BE | Go (Lambda 1 つ) | [0004](adr/0004-backend-go.md) / [0005](adr/0005-lambda.md) |
-| API | API Gateway (HTTP API) | [0008](adr/0008-entry-delivery.md) |
-| DB | Aurora DSQL | [0013](adr/0013-database-dsql.md) / [0014](adr/0014-database-backup.md) |
-| 認証 | Cognito (パスキー)・HttpOnly Cookie | [0011](adr/0011-auth-cognito.md) / [0012](adr/0012-session-cookie.md) |
-| 動画の保存・配信 | S3 + CloudFront | [0015](adr/0015-video-storage.md) / [0008](adr/0008-entry-delivery.md) |
-| 監視 | CloudWatch | [0016](adr/0016-observability.md) |
-| IaC | Terraform | [0017](adr/0017-iac-terraform.md) |
-| CI/CD | GitHub Actions | [0019](adr/0019-repository-ci.md) |
+| API | API Gateway (HTTP API) | [0007](adr/0007-entry-delivery.md) |
+| DB | Aurora DSQL | [0012](adr/0012-database-dsql.md) / [0013](adr/0013-database-backup.md) |
+| 認証 | Cognito (パスキー)・HttpOnly Cookie | [0010](adr/0010-auth-cognito.md) / [0011](adr/0011-session-cookie.md) |
+| 動画の保存・配信 | S3 + CloudFront | [0014](adr/0014-video-storage.md) / [0007](adr/0007-entry-delivery.md) |
+| 監視 | CloudWatch | [0015](adr/0015-observability.md) |
+| IaC | Terraform | [0016](adr/0016-iac-terraform.md) |
+| CI/CD | GitHub Actions | [0018](adr/0018-repository-ci.md) |
 
 ## Environments
 
-判断の理由: [ADR-0018](adr/0018-environments.md)
+判断の理由: [ADR-0017](adr/0017-environments.md)
 
 環境は `dev` と `prod` の 2 つ。同じ AWS アカウントに置き、GitHub Environment・IAM ロール・リソース名で分ける。
 
@@ -79,7 +79,7 @@ flowchart LR
 
 ## CI/CD
 
-判断の理由: [ADR-0019](adr/0019-repository-ci.md)
+判断の理由: [ADR-0018](adr/0018-repository-ci.md)
 
 GitHub Actions で、AWS へは OIDC で接続する。ロールは読み取り専用・`dev`・`prod` の 3 つで、長期のアクセスキーは発行しない。
 

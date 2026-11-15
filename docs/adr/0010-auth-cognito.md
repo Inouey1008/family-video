@@ -1,4 +1,4 @@
-# ADR-0011: 認証は Cognito にし、招待制とパスキーにする
+# ADR-0010: 認証は Cognito にし、招待制とパスキーにする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -7,6 +7,7 @@
 
 - 招待した家族だけが動画を見られる (PRD の Goals)
 - ログインの方法は、安全であれば何でもよい
+- Lambda と同じ AWS の中にそろえると、IAM の認証でつなげられ、構成が単純になる ([ADR-0005](0005-lambda.md))
 
 ## Decision
 
@@ -26,7 +27,7 @@
 ## Consequences
 
 - 家族の追加・削除とアカウントの復旧は、開発者が AWS 側で行う。手順は手順書にまとめる。
-- ログイン状態の保持は [ADR-0012](0012-session-cookie.md) を参照。
+- ログイン状態の保持は [ADR-0011](0011-session-cookie.md) を参照。
 
 ## References
 
