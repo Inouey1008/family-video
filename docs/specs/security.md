@@ -6,6 +6,27 @@
 
 ## Authentication
 
+```mermaid
+sequenceDiagram
+  participant B as ブラウザ
+  participant A as API (Lambda)
+  participant C as Cognito
+
+  B->>A: リクエスト (Cookie)
+  alt access token が有効
+    A-->>B: 画面
+  else access token が期限切れ
+    A->>C: refresh token でトークンを取り直す
+    alt refresh token が有効
+      C-->>A: 新しい access token
+      A-->>B: 画面 (Cookie を更新)
+    else refresh token も期限切れか取り消し済み
+      C-->>A: エラー
+      A-->>B: ログイン画面へ移す
+    end
+  end
+```
+
 - Cognito で招待してアカウントを作る。自己サインアップは無効。パスキーが主で、予備はパスワードと TOTP
 - ログイン状態は HttpOnly Cookie で保持する。JWT の検証と認可は Lambda で行う
 - Cookie には access token (有効期限 15 分) と refresh token (30 日) を別々に入れる。access token が切れたら、Lambda が refresh token で取り直す。30 日を過ぎたら、パスキーでログインし直す

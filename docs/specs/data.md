@@ -6,9 +6,31 @@
 
 ## Stored Data
 
+```mermaid
+erDiagram
+  videos ||--o{ favorites : "お気に入りされる"
+  videos {
+    uuid id PK
+    text uploader_sub "アップロードした家族 (Cognito の sub)"
+    text s3_key "S3 のキー"
+    bigint size "バイト"
+    timestamptz taken_at "撮影日時 (UTC)"
+    integer duration "再生時間 (秒)"
+    text status "uploading / ready / failed"
+    timestamptz deleted_at "削除した日時"
+  }
+  favorites {
+    text member_sub PK "家族 (Cognito の sub)"
+    uuid video_id PK, FK
+    timestamptz created_at "登録した日時"
+  }
+```
+
+※ 型は仮。確定はマイグレーションを作るときに行う
+※ DSQL には外部キーがないので、関係は論理上のもの。整合はアプリで保つ
+※ 家族の情報は Cognito が持つので、家族のテーブルは作らない
+
 - S3: 動画とサムネイル
-- DSQL `videos`: 動画 ID・アップロードした家族の ID (Cognito の `sub`)・S3 のキー・サイズ・撮影日時・再生時間・`status`・`deleted_at`
-- DSQL `favorites`: 家族の ID と動画 ID の組・登録日時
 - 撮影日時は UTC で保存し、日本時間で表示する
 - 家族を除外しても、`videos` の行と動画は残す
 

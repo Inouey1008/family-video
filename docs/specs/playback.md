@@ -21,8 +21,15 @@ sequenceDiagram
   B->>A: 一覧・詳細を要求
   A-->>B: 署名付き URL (短い有効期限) を埋めた画面
   B->>C: GET /media/... (Range)
-  C-->>B: 動画 (206。S3 から OAC で取得)
-  Note over B,A: 期限切れなら、再生前に URL を取り直す
+  alt URL が有効
+    C-->>B: 動画 (206。S3 から OAC で取得)
+  else URL の期限切れ
+    C-->>B: 403
+    B->>A: URL を取り直す
+    A-->>B: 新しい署名付き URL
+    B->>C: GET /media/... (Range)
+    C-->>B: 動画 (206)
+  end
 ```
 
 - 署名の秘密鍵は SSM Parameter Store に置く

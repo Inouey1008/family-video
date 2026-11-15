@@ -4,6 +4,8 @@
 
 判断の理由: [ADR-0019](../adr/0019-video-transfer.md)
 
+## Upload
+
 ```mermaid
 sequenceDiagram
   participant B as ブラウザ
@@ -30,3 +32,53 @@ sequenceDiagram
 - 中断したら、S3 に残した送信済みパートと IndexedDB の進捗から再開する。未送信パートの URL は取り直す
 - iOS でファイルを選び直すと前の選択が消えるので、選択後に JS のリストへコピーしておく
 - 完了しなかったマルチパートは、ライフサイクルルールで 7 日後に削除する
+
+## Failures
+
+正常系の図のうち、失敗した手順から描く。
+
+### 中断と再開
+
+```mermaid
+sequenceDiagram
+  participant B as ブラウザ
+  participant A as API (Lambda)
+  participant S as S3
+
+  Note over B: アプリを離れて送信が止まる
+  B->>B: IndexedDB から進捗 (動画 ID) を読む
+  B->>A: 未送信のパートの URL を要求
+  A->>S: 送信済みのパートを確認 (ListParts)
+  A-->>B: 未送信のパートだけの署名付き URL
+  B->>S: PUT (残りのパート)
+  B->>A: POST /api/uploads/{id}/complete
+```
+
+### サイズの不一致
+
+```mermaid
+sequenceDiagram
+  participant B as ブラウザ
+  participant A as API (Lambda)
+  participant S as S3
+
+  B->>A: POST /api/uploads/{id}/complete
+  A->>S: 保存されたサイズを確認
+  S-->>A: 申告と違うサイズ
+  A->>A: WARN を記録し、status=failed にする
+  A-->>B: 失敗
+  B->>B: 失敗と表示し、再送できるようにする
+```
+
+### 混み合ったとき (429)
+
+```mermaid
+sequenceDiagram
+  participant B as ブラウザ
+  participant A as API (Lambda)
+
+  B->>A: POST /api/uploads
+  A-->>B: 429 (Retry-After)
+  B->>B: Retry-After の秒数だけ待つ
+  B->>A: POST /api/uploads (再試行)
+```
