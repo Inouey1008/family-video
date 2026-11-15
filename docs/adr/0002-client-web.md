@@ -1,4 +1,4 @@
-# ADR-0002: クライアントは PWA にし、iPhone の Safari だけを対象にする
+# ADR-0002: クライアントは Web アプリにし、サポートは iPhone の Safari だけにする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -9,8 +9,8 @@ PRD の Users は全員 iPhone で、User Stories はホーム画面からアプ
 
 ## Decision
 
-- PWA としてホーム画面に追加して使い、ネイティブアプリは作らない。
-- 対象は iPhone の Safari と、ホーム画面から起動した PWA だけにする。
+- ネイティブアプリは作らず、Web アプリにする。ホーム画面に追加して起動できるようにする (PWA)。
+- サポートは iPhone の Safari (ホーム画面からの起動を含む) だけにする。
 - 動画はキャッシュしない。オフラインでの閲覧は初期リリースの範囲外にする。
 
 ## Alternatives

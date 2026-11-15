@@ -42,7 +42,7 @@ flowchart LR
 
 | 区分 | 技術 | ADR |
 |---|---|---|
-| FE | `html/template` + htmx。HTML はサーバーが組み立てる (SPA にしない) | [0002](adr/0002-client-pwa.md) / [0004](adr/0004-frontend-htmx.md) |
+| FE | `html/template` + htmx。HTML はサーバーが組み立てる (SPA にしない) | [0002](adr/0002-client-web.md) / [0004](adr/0004-frontend-htmx.md) |
 | BE | Go (Lambda 1 つ) | [0003](adr/0003-backend-go.md) |
 | API | API Gateway (HTTP API) | [0007](adr/0007-video-storage-delivery.md) |
 | DB | Aurora DSQL | [0005](adr/0005-database-dsql.md) |
