@@ -31,3 +31,4 @@
 ## References
 
 - [Aurora DSQL 料金](https://aws.amazon.com/rds/aurora/dsql/pricing/)
+- [Supabase の無料プランの一時停止](https://supabase.com/docs/guides/platform/free-project-pausing)
