@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。保存する情報・削除・バックアップ。
 
-判断の理由: [ADR-0005](../adr/0005-database-dsql.md) / [ADR-0007](../adr/0007-video-storage.md) / [ADR-0012](../adr/0012-database-backup.md)
+判断の理由: [ADR-0013](../adr/0013-database-dsql.md) / [ADR-0015](../adr/0015-video-storage.md) / [ADR-0014](../adr/0014-database-backup.md)
 
 ## Stored Data
 

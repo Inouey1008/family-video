@@ -1,11 +1,11 @@
-# ADR-0017: API への入り口は、秘密のヘッダーで CloudFront に限る
+# ADR-0009: API への入り口は、秘密のヘッダーで CloudFront に限る
 
 - Status: Accepted
 - Date: 2026-11-15
 
 ## Context
 
-- 入り口は CloudFront の 1 つにする ([ADR-0013](0013-entry-delivery.md))
+- 入り口は CloudFront の 1 つにする ([ADR-0008](0008-entry-delivery.md))
 - API Gateway (HTTP API) は自分の公開 URL を持ち、CloudFront を通らずに直接呼べる。直接呼ばれると、CloudFront の地域制限 ([ADR-0010](0010-attack-protection.md)) が効かない
 - HTTP API には、CloudFront からだけ受け付ける設定がない
 

@@ -1,4 +1,4 @@
-# ADR-0005: DB に Aurora DSQL を使う
+# ADR-0013: DB に Aurora DSQL を使う
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -7,7 +7,7 @@
 
 - 使い慣れている RDB (PostgreSQL) の SQL で、動画のメタデータを扱いたい
 - 固定費をほぼ 0 円にする
-- VPC は使わない ([ADR-0001](0001-cloud-aws-lambda.md))
+- VPC は使わない ([ADR-0003](0003-lambda.md))
 
 ## Decision
 
@@ -26,7 +26,7 @@
 ## Consequences
 
 - DSQL は新しく仕様が変わりやすい。SQL を基本的な CRUD に絞り、アクセスを 1 か所に集めて影響を小さくする。
-- バックアップは [ADR-0012](0012-database-backup.md) を参照。
+- バックアップは [ADR-0014](0014-database-backup.md) を参照。
 
 ## References
 

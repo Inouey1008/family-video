@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。一覧・再生・ダウンロード・お気に入り。
 
-判断の理由: [ADR-0013](../adr/0013-entry-delivery.md)
+判断の理由: [ADR-0008](../adr/0008-entry-delivery.md)
 
 ## List
 

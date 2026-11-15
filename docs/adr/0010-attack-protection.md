@@ -23,7 +23,7 @@
 
 ## Consequences
 
-- 地域制限は CloudFront を通るリクエストにしか効かない。API Gateway への直接のアクセスは [ADR-0017](0017-origin-lock.md) で防ぐ。
+- 地域制限は CloudFront を通るリクエストにしか効かない。API Gateway への直接のアクセスは [ADR-0009](0009-origin-lock.md) で防ぐ。
 - 値や旅行時の扱いなどの細目は [設計書](../specs/security.md) を参照。
 
 ## References

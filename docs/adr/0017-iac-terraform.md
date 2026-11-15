@@ -1,4 +1,4 @@
-# ADR-0008: インフラは Terraform で構築する
+# ADR-0017: インフラは Terraform で構築する
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -19,4 +19,4 @@
 
 ## Consequences
 
-- 環境の分け方は [ADR-0015](0015-environments.md) を参照。
+- 環境の分け方は [ADR-0018](0018-environments.md) を参照。

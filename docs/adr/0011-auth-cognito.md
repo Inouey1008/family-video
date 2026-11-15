@@ -1,4 +1,4 @@
-# ADR-0006: 認証は Cognito にし、招待制とパスキーにする
+# ADR-0011: 認証は Cognito にし、招待制とパスキーにする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -26,7 +26,7 @@
 ## Consequences
 
 - 家族の追加・削除とアカウントの復旧は、開発者が AWS 側で行う。手順は手順書にまとめる。
-- ログイン状態の保持は [ADR-0014](0014-session-cookie.md) を参照。
+- ログイン状態の保持は [ADR-0012](0012-session-cookie.md) を参照。
 
 ## References
 

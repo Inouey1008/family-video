@@ -1,4 +1,4 @@
-# ADR-0012: DB は AWS Backup で毎日バックアップする
+# ADR-0014: DB は AWS Backup で毎日バックアップする
 
 - Status: Accepted
 - Date: 2026-11-15

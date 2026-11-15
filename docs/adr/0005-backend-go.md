@@ -1,4 +1,4 @@
-# ADR-0003: バックエンドは Go (provided.al2023・zip) にする
+# ADR-0005: バックエンドは Go (provided.al2023・zip) にする
 
 - Status: Accepted
 - Date: 2026-11-15

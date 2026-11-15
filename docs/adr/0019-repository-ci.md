@@ -1,4 +1,4 @@
-# ADR-0011: GitHub の public モノレポと Actions + OIDC
+# ADR-0019: GitHub の public モノレポと Actions + OIDC
 
 - Status: Accepted
 - Date: 2026-11-15

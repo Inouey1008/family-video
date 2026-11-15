@@ -1,4 +1,4 @@
-# ADR-0013: 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする
+# ADR-0008: 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -27,7 +27,7 @@ PRD の Security は、動画をログインした家族しか取得できない
 
 - CloudFront の Always Free (毎月データ転送 1 TB、2026-11-15 に確認) に収まる範囲では、配信の固定費がかからない。
 - CloudFront のディストリビューションを作り直すと、URL が変わる。
-- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0017](0017-origin-lock.md) を参照。
+- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0009](0009-origin-lock.md) を参照。
 - 配信の細目は [設計書](../specs/playback.md)、アップロードの細目は [設計書](../specs/upload.md) を参照。
 
 ## References

@@ -1,4 +1,4 @@
-# ADR-0007: 動画は S3 に置く
+# ADR-0015: 動画は S3 に置く
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -7,7 +7,7 @@
 
 - 古くなった動画の保存費用が自動で下がる (PRD の Cost)
 - 動画の控えは取らない (PRD の Decisions)
-- 処理は AWS の Lambda で動かす ([ADR-0001](0001-cloud-aws-lambda.md))
+- 処理は AWS の Lambda で動かす ([ADR-0003](0003-lambda.md))
 
 ## Decision
 
