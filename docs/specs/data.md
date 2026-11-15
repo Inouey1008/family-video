@@ -18,18 +18,22 @@ erDiagram
     timestamptz taken_at "撮影日時 (UTC)"
     integer duration "再生時間 (秒)"
     text status "uploading / ready / failed / deleted"
+    timestamptz created_at "作った日時"
+    timestamptz updated_at "最後に変えた日時"
   }
   favorites {
     text member_sub PK "家族 (Cognito の sub)"
     uuid video_id PK, FK
     timestamptz created_at "登録した日時"
+    timestamptz updated_at "最後に変えた日時"
   }
   video_lifecycle_events {
     uuid id PK
     uuid video_id FK
     text action "upload_started など (下の表)"
     text actor_sub "操作した家族。仕組みが行ったときは空"
-    timestamptz at "起きた日時"
+    timestamptz created_at "起きた日時"
+    timestamptz updated_at "最後に変えた日時 (追加だけなので created_at と同じ)"
   }
 ```
 
@@ -37,6 +41,7 @@ erDiagram
 ※ DSQL には外部キーがないので、関係は論理上のもの。整合はアプリで保つ
 ※ 家族の情報は Cognito が持つので、家族のテーブルは作らない
 ※ `video_lifecycle_events` は追加だけで、書き換えも削除もしない
+※ すべてのテーブルに `created_at` と `updated_at` を持つ。DSQL はトリガーが使えないので、アプリが書き込むたびに入れる
 
 - S3: 動画とサムネイル
 - 撮影日時は UTC で保存し、日本時間で表示する
@@ -69,7 +74,8 @@ stateDiagram-v2
 | `uploading` / `failed` → 消す | 7 日放置された | 仕組み | `purged` |
 
 - 状態を変えるときは、`videos` の `status` の更新と `video_lifecycle_events` への追加を、同じトランザクションで行う
-- 削除した日時は、`video_lifecycle_events` の最後の `deleted` から取る。`videos` には持たない
+- 削除した日時は、`video_lifecycle_events` の最後の `deleted` の `created_at` から取る。`videos` には持たない
+- 7 日放置の判定は、`videos` の `updated_at` で行う (`uploading` / `failed` のまま 7 日変わっていないか)
 - 通常の一覧は `ready` だけを出す。`uploading` と `failed` はアップロードの画面に、`deleted` は「削除した動画」の画面に出す ([UI](ui.md))
 - 家族は誰が削除した動画でも、「削除した動画」の画面から戻せる
 - 消す処理は、EventBridge Scheduler が同じ Lambda を日次に呼んで行う。`videos` の行と、S3 の全バージョン (古いバージョンを含む) を消す。`video_lifecycle_events` は `purged` を足して残す
