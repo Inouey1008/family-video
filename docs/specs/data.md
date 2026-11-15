@@ -12,17 +12,19 @@ erDiagram
   videos ||--o{ video_lifecycle_events : "出来事を記録する"
   videos {
     uuid id PK
-    text uploader_sub "アップロードした家族 (Cognito の sub)"
-    text s3_key "S3 のキー"
-    bigint size "バイト"
+    text uploaded_by "アップロードした家族の ID (Cognito の sub)"
+    text s3_key "動画の S3 のキー"
+    text thumbnail_key "サムネイルの S3 のキー"
+    text content_type "video/mp4 / video/quicktime"
+    bigint size_bytes "サイズ (バイト)"
     timestamptz taken_at "撮影日時 (UTC)"
-    integer duration "再生時間 (秒)"
+    integer duration_seconds "再生時間 (秒)"
     text status "uploading / ready / failed / deleted"
     timestamptz created_at "作った日時"
     timestamptz updated_at "最後に変えた日時"
   }
   favorites {
-    text member_sub PK "家族 (Cognito の sub)"
+    text member_id PK "お気に入りにした家族の ID (Cognito の sub)"
     uuid video_id PK, FK
     timestamptz created_at "登録した日時"
     timestamptz updated_at "最後に変えた日時"
@@ -31,7 +33,7 @@ erDiagram
     uuid id PK
     uuid video_id FK
     text action "upload_started など (下の表)"
-    text actor_sub "操作した家族。仕組みが行ったときは空"
+    text performed_by "操作した家族の ID。仕組みが行ったときは空"
     timestamptz created_at "起きた日時"
     timestamptz updated_at "最後に変えた日時 (追加だけなので created_at と同じ)"
   }
@@ -41,6 +43,7 @@ erDiagram
 ※ DSQL には外部キーがないので、関係は論理上のもの。整合はアプリで保つ
 ※ 家族の情報は Cognito が持つので、家族のテーブルは作らない
 ※ `video_lifecycle_events` は追加だけで、書き換えも削除もしない
+※ 「誰がしたか」は `〜_by`、「誰のものか」は `member_id` と名付ける。どちらにも家族の ID (Cognito の `sub`) を入れる
 ※ すべてのテーブルに `created_at` と `updated_at` を持つ。DSQL はトリガーが使えないので、アプリが書き込むたびに入れる
 
 - S3: 動画とサムネイル
