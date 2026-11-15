@@ -8,7 +8,7 @@
 | [0002](0002-client-web.md) | クライアントは Web アプリにし、サポートは iPhone の Safari だけにする | Accepted |
 | [0003](0003-mpa.md) | フロントエンドは SPA ではなく MPA にする (サーバーが HTML を返す) | Accepted |
 | [0004](0004-backend-go.md) | バックエンドは Go にし、1 つのバイナリで動かす | Accepted |
-| [0005](0005-lambda.md) | 処理は Lambda の OS-only ランタイムで動かし、VPC には入れない | Accepted |
+| [0005](0005-lambda.md) | バックエンドの実行環境は Lambda (OS-only ランタイム) にし、VPC には入れない | Accepted |
 | [0006](0006-htmx.md) | フロントエンドは html/template と htmx 2 で作る | Accepted |
 | [0007](0007-entry-delivery.md) | 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする | Accepted |
 | [0008](0008-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |

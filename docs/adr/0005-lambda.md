@@ -1,4 +1,4 @@
-# ADR-0005: 処理は Lambda の OS-only ランタイムで動かし、VPC には入れない
+# ADR-0005: バックエンドの実行環境は Lambda (OS-only ランタイム) にし、VPC には入れない
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -12,7 +12,7 @@
 
 ## Decision
 
-- 処理は AWS Lambda にし、OS-only ランタイム (`provided.al2023`) に zip でデプロイする。Go のバイナリをそのまま OS の上で動かし、OS の保守は AWS が行う。
+- バックエンドは AWS Lambda で動かし、OS-only ランタイム (`provided.al2023`) に zip でデプロイする。Go のバイナリをそのまま OS の上で動かし、OS の保守は AWS が行う。
 - VPC・NAT ゲートウェイは使わない。ほかの AWS のサービスには、VPC を通さずに IAM の認証で接続する。
 - リージョンは東京にする。家族に物理的に近く、通信の遅れが小さい。
 
