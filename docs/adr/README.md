@@ -7,7 +7,7 @@
 | [0001](0001-cloud-aws-serverless.md) | AWS 東京のサーバーレス構成にする | Accepted |
 | [0002](0002-client-pwa.md) | クライアントは PWA にし、iPhone の Safari だけを対象にする | Accepted |
 | [0003](0003-backend-go.md) | バックエンドは Go (provided.al2023・zip) にする | Accepted |
-| [0004](0004-frontend-htmx.md) | 画面は html/template + htmx にし、ビルド工程を持たない | Accepted |
+| [0004](0004-frontend-htmx.md) | 画面は html/template + htmx にし、フロントエンドのビルドを持たない | Accepted |
 | [0005](0005-database-dsql.md) | DB に Aurora DSQL を使い、AWS Backup で毎日バックアップする | Accepted |
 | [0006](0006-auth-cognito.md) | 認証は Cognito (招待制・パスキー) と HttpOnly Cookie にする | Accepted |
 | [0007](0007-video-storage-delivery.md) | 動画は S3 Intelligent-Tiering に置き、CloudFront の署名付き URL で配信する | Accepted |

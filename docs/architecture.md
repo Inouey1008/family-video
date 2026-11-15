@@ -39,7 +39,7 @@ flowchart LR
 ```
 
 - `/service-worker.js` は、scope を `/` にするためルートのパスで配信する
-- Lambda は 1 つ (Go・provided.al2023・VPC なし)。画面は `html/template` + htmx で、ビルド工程はない
+- Lambda は 1 つ (Go・provided.al2023・VPC なし)。画面は `html/template` + htmx で、フロントエンドのビルド (npm・バンドラー) は使わない
 - DB は DSQL。使う SQL は基本的な CRUD に限り、アクセスは `internal/db` に集める。Go の外部依存は aws-lambda-go・aws-sdk-go-v2・pgx だけ
 
 ## Environments

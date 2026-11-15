@@ -1,4 +1,4 @@
-# ADR-0004: 画面は html/template + htmx にし、ビルド工程を持たない
+# ADR-0004: 画面は html/template + htmx にし、フロントエンドのビルドを持たない
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -10,7 +10,7 @@ PRD の Maintenance は、外部の部品を最小限にすること。操作の
 ## Decision
 
 - 画面は Go の `html/template` でサーバー側で作り、htmx 2 で部分更新する。
-- ビルド工程は置かず、htmx (2.0.11 に固定) と素の JS だけを使う。素の JS はアップロードに限る。
+- フロントエンドのビルド (npm・バンドラー) は使わず、htmx (2.0.11 に固定) と素の JS だけを使う。素の JS はアップロードに限る。
 
 ## Alternatives
 
