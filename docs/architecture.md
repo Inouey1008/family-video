@@ -38,9 +38,9 @@ flowchart LR
   PWA -.->|"署名付き URL で PUT"| S3M
 ```
 
-- `/service-worker.js` は、scope を `/` にするためルートのパスで配信する
-- Lambda は 1 つ (Go・provided.al2023・VPC なし)。画面は `html/template` + htmx で、フロントエンドのビルド (npm・バンドラー) は使わない
-- DB は DSQL。使う SQL は基本的な CRUD に限り、アクセスは `internal/db` に集める。Go の外部依存は aws-lambda-go・aws-sdk-go-v2・pgx だけ
+- サーバーは Go で書いた Lambda 1 つ。画面の HTML も Lambda が組み立てて返す (`html/template` + htmx)。npm などのフロントエンドのビルドは使わない
+- DB は Aurora DSQL。PostgreSQL の機能の一部しか使えないので、SQL は基本的な読み書きに限る
+- `service-worker.js` は `/static/` ではなくルート (`/`) に置く。Service Worker は、置いた場所より下のページしか扱えないため
 
 ## Environments
 
