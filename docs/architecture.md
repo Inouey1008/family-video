@@ -19,7 +19,7 @@
 
 ```mermaid
 flowchart LR
-  PWA["PWA (htmx + upload.js)"]
+  PWA["ブラウザ"]
   CF["CloudFront"]
   S3S["S3 (static)"]
   S3M["S3 (動画・サムネイル)"]
