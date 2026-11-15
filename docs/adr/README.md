@@ -6,11 +6,11 @@
 |---|---|---|
 | [0001](0001-serverless.md) | 常駐サーバーを持たず、サーバーレスにする | Accepted |
 | [0002](0002-client-web.md) | クライアントは Web アプリにし、サポートは iPhone の Safari だけにする | Accepted |
-| [0003](0003-mpa.md) | 画面は SPA ではなく MPA にする (サーバーが HTML を返す) | Accepted |
+| [0003](0003-mpa.md) | フロントエンドは SPA ではなく MPA にする (サーバーが HTML を返す) | Accepted |
 | [0004](0004-backend-go.md) | バックエンドは Go にし、1 つのバイナリで動かす | Accepted |
 | [0005](0005-lambda.md) | 処理は Lambda の OS-only ランタイムで動かし、VPC には入れない | Accepted |
 | [0006](0006-cloud-aws.md) | DB・認証・保存先も AWS でそろえ、東京リージョンに置く | Accepted |
-| [0007](0007-htmx.md) | 画面は html/template と htmx 2 で作る | Accepted |
+| [0007](0007-htmx.md) | フロントエンドは html/template と htmx 2 で作る | Accepted |
 | [0008](0008-entry-delivery.md) | 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする | Accepted |
 | [0009](0009-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |
 | [0010](0010-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
