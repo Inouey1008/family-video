@@ -13,7 +13,7 @@
 
 ## Architecture
 
-判断の理由: [ADR-0001](adr/0001-serverless.md) / [ADR-0005](adr/0005-lambda.md) / [ADR-0007](adr/0007-entry-delivery.md)
+判断の理由: [ADR-0001](adr/0001-serverless.md) / [ADR-0005](adr/0005-lambda.md) / [ADR-0012](adr/0012-entry-delivery.md)
 
 入り口は CloudFront の 1 つで、パスごとに S3 と API へ振り分ける (同一オリジンなので CORS は要らない)。アップロードだけは署名付き URL で S3 に直接送る。
 
@@ -44,10 +44,10 @@ flowchart LR
 |---|---|---|
 | FE | `html/template` + htmx。MPA (HTML はサーバーが組み立てる) | [0003](adr/0003-mpa.md) / [0006](adr/0006-htmx.md) |
 | BE | Go (Lambda 1 つ) | [0004](adr/0004-backend-go.md) / [0005](adr/0005-lambda.md) |
-| API | API Gateway (HTTP API) | [0007](adr/0007-entry-delivery.md) |
-| DB | Aurora DSQL | [0012](adr/0012-database-dsql.md) / [0013](adr/0013-database-backup.md) |
-| 認証 | Cognito (パスキー)・HttpOnly Cookie | [0010](adr/0010-auth-cognito.md) / [0011](adr/0011-session-cookie.md) |
-| 動画の保存・配信 | S3 + CloudFront | [0014](adr/0014-video-storage.md) / [0007](adr/0007-entry-delivery.md) |
+| API | API Gateway (HTTP API) | [0012](adr/0012-entry-delivery.md) |
+| DB | Aurora DSQL | [0009](adr/0009-database-dsql.md) / [0010](adr/0010-database-backup.md) |
+| 認証 | Cognito (パスキー)・HttpOnly Cookie | [0007](adr/0007-auth-cognito.md) / [0008](adr/0008-session-cookie.md) |
+| 動画の保存・配信 | S3 + CloudFront | [0011](adr/0011-video-storage.md) / [0012](adr/0012-entry-delivery.md) |
 | 監視 | CloudWatch | [0015](adr/0015-observability.md) |
 | IaC | Terraform | [0016](adr/0016-iac-terraform.md) |
 | CI/CD | GitHub Actions | [0018](adr/0018-repository-ci.md) |

@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。アップロードと再開。
 
-判断の理由: [ADR-0007](../adr/0007-entry-delivery.md)
+判断の理由: [ADR-0012](../adr/0012-entry-delivery.md)
 
 ```mermaid
 sequenceDiagram

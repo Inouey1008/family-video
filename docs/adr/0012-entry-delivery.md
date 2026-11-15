@@ -1,11 +1,14 @@
-# ADR-0007: 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする
+# ADR-0012: 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする
 
 - Status: Accepted
 - Date: 2026-11-15
 
 ## Context
 
-PRD の Security は、動画をログインした家族しか取得できないこと。動画は API Gateway (10 MB) と Lambda (6 MB) のペイロード制限を超える。動画は大きいので、配信の転送量を無料枠に収めたい。
+- 動画はログインした家族しか取得できない (PRD の Security)
+- 動画は S3 に置き ([ADR-0011](0011-video-storage.md))、ログインは Cookie で保持する ([ADR-0008](0008-session-cookie.md))
+- 動画は API Gateway (10 MB) と Lambda (6 MB) のペイロード制限を超える
+- 動画は大きいので、配信の転送量を無料枠に収めたい
 
 ## Decision
 
@@ -27,7 +30,7 @@ PRD の Security は、動画をログインした家族しか取得できない
 
 - CloudFront の Always Free (毎月データ転送 1 TB、2026-11-15 に確認) に収まる範囲では、配信の固定費がかからない。
 - CloudFront のディストリビューションを作り直すと、URL が変わる。
-- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0008](0008-origin-lock.md) を参照。
+- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0013](0013-origin-lock.md) を参照。
 - 配信の細目は [設計書](../specs/playback.md)、アップロードの細目は [設計書](../specs/upload.md) を参照。
 
 ## References

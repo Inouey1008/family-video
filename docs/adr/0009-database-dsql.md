@@ -1,4 +1,4 @@
-# ADR-0012: DB に Aurora DSQL を使う
+# ADR-0009: DB に Aurora DSQL を使う
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -28,7 +28,7 @@
 ## Consequences
 
 - DSQL は新しく仕様が変わりやすい。SQL を基本的な CRUD に絞り、アクセスを 1 か所に集めて影響を小さくする。
-- バックアップは [ADR-0013](0013-database-backup.md) を参照。
+- バックアップは [ADR-0010](0010-database-backup.md) を参照。
 
 ## References
 

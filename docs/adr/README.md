@@ -10,14 +10,14 @@
 | [0004](0004-backend-go.md) | バックエンドは Go にし、1 つのバイナリで動かす | Accepted |
 | [0005](0005-lambda.md) | バックエンドの実行環境は Lambda (OS-only ランタイム) にし、VPC には入れない | Accepted |
 | [0006](0006-htmx.md) | フロントエンドは html/template と htmx 2 で作る | Accepted |
-| [0007](0007-entry-delivery.md) | 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする | Accepted |
-| [0008](0008-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |
-| [0009](0009-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
-| [0010](0010-auth-cognito.md) | 認証は Cognito にし、招待制とパスキーにする | Accepted |
-| [0011](0011-session-cookie.md) | ログイン状態は HttpOnly Cookie で保持する | Accepted |
-| [0012](0012-database-dsql.md) | DB に Aurora DSQL を使う | Accepted |
-| [0013](0013-database-backup.md) | DB は AWS Backup で毎日バックアップする | Accepted |
-| [0014](0014-video-storage.md) | 動画は S3 に置く | Accepted |
+| [0007](0007-auth-cognito.md) | 認証は Cognito にし、招待制とパスキーにする | Accepted |
+| [0008](0008-session-cookie.md) | ログイン状態は HttpOnly Cookie で保持する | Accepted |
+| [0009](0009-database-dsql.md) | DB に Aurora DSQL を使う | Accepted |
+| [0010](0010-database-backup.md) | DB は AWS Backup で毎日バックアップする | Accepted |
+| [0011](0011-video-storage.md) | 動画は S3 に置く | Accepted |
+| [0012](0012-entry-delivery.md) | 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする | Accepted |
+| [0013](0013-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |
+| [0014](0014-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
 | [0015](0015-observability.md) | 監視は CloudWatch の標準機能だけで構成する | Accepted |
 | [0016](0016-iac-terraform.md) | インフラは Terraform で構築する | Accepted |
 | [0017](0017-environments.md) | dev と prod は同じ AWS アカウントで分ける | Accepted |

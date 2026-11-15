@@ -1,4 +1,4 @@
-# ADR-0014: 動画は S3 に置く
+# ADR-0011: 動画は S3 に置く
 
 - Status: Accepted
 - Date: 2026-11-15

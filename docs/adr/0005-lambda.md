@@ -32,7 +32,7 @@
 
 - ネットワークで閉じないので、IAM のポリシーを最小権限にすることが前提になる ([Security](../specs/security.md))。
 - `provided.al2023` の廃止予定日は 2029-06-30 (2026-11-15 に確認)。それまでに次の OS-only ランタイムへ移る。
-- Lambda のペイロード制限 (6 MB) を超える動画は、Lambda を通さずに送る ([ADR-0007](0007-entry-delivery.md))。
+- Lambda のペイロード制限 (6 MB) を超える動画は、Lambda を通さずに送る ([ADR-0012](0012-entry-delivery.md))。
 
 ## References
 
