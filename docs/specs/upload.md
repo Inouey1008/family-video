@@ -14,11 +14,11 @@ sequenceDiagram
 
   B->>B: サムネイルと再生時間を生成 (canvas)
   B->>A: POST /api/uploads
-  A-->>B: 各パートの署名付き URL (status=uploading の行を作る)
+  A-->>B: 各パートの署名付き URL (行を作り、upload_started を記録)
   B->>S: PUT (パートを並列で)
   B->>A: POST /api/uploads/{id}/complete
   A->>S: 保存されたサイズを確認
-  A-->>B: 完了 (status=ready)
+  A-->>B: 完了 (upload_completed を記録)
   B->>A: 一覧を読み直す (htmx)
 ```
 
@@ -66,7 +66,7 @@ sequenceDiagram
   B->>A: POST /api/uploads/{id}/complete
   A->>S: 保存されたサイズを確認
   S-->>A: 申告と違うサイズ
-  A->>A: WARN を記録し、status=failed にする
+  A->>A: WARN のログを出し、upload_failed を記録
   A-->>B: 失敗
   B->>B: 失敗と表示し、再送できるようにする
 ```

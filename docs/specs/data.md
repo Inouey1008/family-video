@@ -19,7 +19,6 @@ erDiagram
     bigint size_bytes "サイズ (バイト)"
     timestamptz taken_at "撮影日時 (UTC)"
     integer duration_seconds "再生時間 (秒)"
-    text status "uploading / ready / failed / deleted"
     timestamptz created_at "作った日時"
     timestamptz updated_at "最後に変えた日時"
   }
@@ -65,7 +64,9 @@ stateDiagram-v2
   failed --> [*]: 7 日放置で消す
 ```
 
-| 遷移 | きっかけ | 操作する人 | action |
+状態は列に持たず、その動画の最後のイベントの `action` で決まる。
+
+| 遷移 | きっかけ | 操作する人 | 足す action |
 |---|---|---|---|
 | 開始 → `uploading` | `POST /api/uploads` | アップロードした家族 | `upload_started` |
 | `uploading` → `ready` | 完了し、サイズが一致した | アップロードした家族 | `upload_completed` |
@@ -76,9 +77,19 @@ stateDiagram-v2
 | `deleted` → 消す | 削除から 30 日たった | 仕組み | `purged` |
 | `uploading` / `failed` → 消す | 7 日放置された | 仕組み | `purged` |
 
-- 状態を変えるときは、`videos` の `status` の更新と `video_lifecycle_events` への追加を、同じトランザクションで行う
-- 削除した日時は、`video_lifecycle_events` の最後の `deleted` の `created_at` から取る。`videos` には持たない
-- 7 日放置の判定は、`videos` の `updated_at` で行う (`uploading` / `failed` のまま 7 日変わっていないか)
+| 最後の action | 状態 |
+|---|---|
+| `upload_started` | `uploading` |
+| `upload_completed`・`restored` | `ready` |
+| `upload_failed` | `failed` |
+| `deleted` | `deleted` |
+
+- 状態を変えるときは、`video_lifecycle_events` に 1 行足す。同じトランザクションで、今の状態から移れるかを確かめ、`videos` の `updated_at` も更新する
+- `videos` の `updated_at` を更新するのは、同時に 2 つの操作 (削除と復元など) が来たときに、DSQL の楽観的な同時実行制御で片方を失敗させるため。イベントの追加だけでは、ぶつかったことに気づけない
+- イベントの順番は `created_at` で決め、同じ時刻なら `id` で決める (`id` は時刻順に並ぶ UUIDv7)
+- 最後のイベントを速く引けるよう、`video_lifecycle_events (video_id, created_at)` に索引を張る
+- 削除した日時と削除した家族は、最後の `deleted` のイベントから取る
+- 7 日放置の判定は、最後のイベントが `upload_started` か `upload_failed` のまま、7 日たったかで行う
 - 通常の一覧は `ready` だけを出す。`uploading` と `failed` はアップロードの画面に、`deleted` は「削除した動画」の画面に出す ([UI](ui.md))
 - 家族は誰が削除した動画でも、「削除した動画」の画面から戻せる
 - 消す処理は、EventBridge Scheduler が同じ Lambda を日次に呼んで行う。`videos` の行と、S3 の全バージョン (古いバージョンを含む) を消す。`video_lifecycle_events` は `purged` を足して残す
