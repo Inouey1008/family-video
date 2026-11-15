@@ -1,11 +1,13 @@
-# ADR-0004: クライアントは Web アプリにし、サポートは iPhone の Safari だけにする
+# ADR-0003: クライアントは Web アプリにし、サポートは iPhone の Safari だけにする
 
 - Status: Accepted
 - Date: 2026-11-15
 
 ## Context
 
-PRD の Users は全員 iPhone で、User Stories はホーム画面からアプリのように起動したいこと。保守の手間も小さく保ちたい。
+- 家族は全員 iPhone を使う (PRD の Users)
+- ホーム画面からアプリのように起動したい (PRD の User Stories)
+- 保守に時間をかけない (PRD の Maintenance)
 
 ## Decision
 

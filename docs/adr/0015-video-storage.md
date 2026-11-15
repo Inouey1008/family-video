@@ -7,7 +7,7 @@
 
 - 古くなった動画の保存費用が自動で下がる (PRD の Cost)
 - 動画の控えは取らない (PRD の Decisions)
-- 処理は AWS の Lambda で動かす ([ADR-0003](0003-lambda.md))
+- 処理は AWS の Lambda で動かす ([ADR-0006](0006-lambda.md))
 
 ## Decision
 

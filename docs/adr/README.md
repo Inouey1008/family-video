@@ -6,10 +6,10 @@
 |---|---|---|
 | [0001](0001-serverless.md) | 常駐サーバーを持たず、サーバーレスにする | Accepted |
 | [0002](0002-cloud-aws.md) | クラウドは AWS (東京) にする | Accepted |
-| [0003](0003-lambda.md) | 処理は Lambda にし、VPC には入れない | Accepted |
-| [0004](0004-client-web.md) | クライアントは Web アプリにし、サポートは iPhone の Safari だけにする | Accepted |
-| [0005](0005-backend-go.md) | バックエンドは Go (provided.al2023・zip) にする | Accepted |
-| [0006](0006-mpa.md) | 画面は SPA ではなく MPA にする (サーバーが HTML を返す) | Accepted |
+| [0003](0003-client-web.md) | クライアントは Web アプリにし、サポートは iPhone の Safari だけにする | Accepted |
+| [0004](0004-mpa.md) | 画面は SPA ではなく MPA にする (サーバーが HTML を返す) | Accepted |
+| [0005](0005-backend-go.md) | バックエンドは Go にし、1 つのバイナリで動かす | Accepted |
+| [0006](0006-lambda.md) | 処理は Lambda の OS-only ランタイムで動かし、VPC には入れない | Accepted |
 | [0007](0007-htmx.md) | 画面は html/template と htmx 2 で作る | Accepted |
 | [0008](0008-entry-delivery.md) | 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする | Accepted |
 | [0009](0009-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |

@@ -1,28 +1,29 @@
-# ADR-0005: バックエンドは Go (provided.al2023・zip) にする
+# ADR-0005: バックエンドは Go にし、1 つのバイナリで動かす
 
 - Status: Accepted
 - Date: 2026-11-15
 
 ## Context
 
-PRD の Maintenance は、外部の部品を最小限にし、保守に時間をかけないため安定した技術を選ぶこと。
+- 保守に時間をかけない (PRD の Maintenance)。言語ランタイムやコンテナのベースイメージを、定期的に更新する手間を避けたい
+- 外部の部品を最小限にする (PRD の Maintenance)
+- 画面の HTML はサーバーが組み立てる ([ADR-0004](0004-mpa.md))
 
 ## Decision
 
-- Lambda は Go で書き、OS-only ランタイム (`provided.al2023`) に zip でデプロイする。
-- 外部依存は aws-lambda-go・aws-sdk-go-v2・pgx に限る。
+- バックエンドは Go で書き、依存を含めて 1 つのバイナリにビルドする。
+- HTTP・HTML のテンプレート・暗号は標準ライブラリを使う。外部依存は aws-lambda-go・aws-sdk-go-v2・pgx に限る。
 
 ## Alternatives
 
 | 案 | 選ばなかった理由 |
 |---|---|
-| Node.js / Python / Java / .NET | Lambda の言語ランタイムは数年ごとにサポートが切れ、そのたびに移行が要る。依存パッケージも増えやすい |
-| Rust | OS-only ランタイムで動くが、HTTP・テンプレート・非同期処理に外部の crate が要る。Go は標準ライブラリで足りる |
-| コンテナイメージ | ベースイメージのパッチを自分で当てる必要がある |
+| TypeScript (Node.js) / Python / Java / .NET | 言語ランタイムの上で動く。ランタイムは数年ごとにサポートが切れ、そのたびに移行が要る。依存パッケージも増えやすい |
+| Rust | 1 つのバイナリにできるが、HTTP・テンプレート・非同期処理に外部の crate が要る。Go は標準ライブラリで足りる |
 
 ## Consequences
 
-- `provided.al2023` の廃止予定日は 2029-06-30 (2026-11-15 に確認)。それまでに次の OS-only ランタイムへ移る。
+- バイナリを動かす場所は [ADR-0006](0006-lambda.md) を参照。
 
 ## References
 
