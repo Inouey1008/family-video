@@ -8,11 +8,20 @@
 
 ```mermaid
 erDiagram
+  members ||--o{ videos : "アップロードする"
+  members ||--o{ favorites : "お気に入りにする"
+  members ||--o{ video_lifecycle_events : "操作する"
   videos ||--o{ favorites : "お気に入りされる"
   videos ||--o{ video_lifecycle_events : "出来事を記録する"
+  members {
+    text id PK "Cognito の sub"
+    text display_name "画面に出す名前"
+    timestamptz created_at "作った日時"
+    timestamptz updated_at "最後に変えた日時"
+  }
   videos {
     uuid id PK
-    text uploaded_by "アップロードした家族の ID (Cognito の sub)"
+    text uploaded_by FK "アップロードした家族"
     text s3_key "動画の S3 のキー"
     text thumbnail_key "サムネイルの S3 のキー"
     text content_type "video/mp4 / video/quicktime"
@@ -23,7 +32,7 @@ erDiagram
     timestamptz updated_at "最後に変えた日時"
   }
   favorites {
-    text member_id PK "お気に入りにした家族の ID (Cognito の sub)"
+    text member_id PK, FK "お気に入りにした家族"
     uuid video_id PK, FK
     timestamptz created_at "登録した日時"
     timestamptz updated_at "最後に変えた日時"
@@ -32,7 +41,7 @@ erDiagram
     uuid id PK
     uuid video_id FK
     text action "upload_started など (下の表)"
-    text performed_by "操作した家族の ID。仕組みが行ったときは空"
+    text performed_by FK "操作した家族。仕組みが行ったときは空"
     timestamptz created_at "起きた日時"
     timestamptz updated_at "最後に変えた日時 (追加だけなので created_at と同じ)"
   }
@@ -40,14 +49,15 @@ erDiagram
 
 ※ 型は仮。確定はマイグレーションを作るときに行う
 ※ DSQL には外部キーがないので、関係は論理上のもの。整合はアプリで保つ
-※ 家族の情報は Cognito が持つので、家族のテーブルは作らない
+※ ログインと本人確認は Cognito が行う。`members` は、画面に出す名前と、家族の ID の参照先として持つ
 ※ `video_lifecycle_events` は追加だけで、書き換えも削除もしない
-※ 「誰がしたか」は `〜_by`、「誰のものか」は `member_id` と名付ける。どちらにも家族の ID (Cognito の `sub`) を入れる
+※ 「誰がしたか」は `〜_by`、「誰のものか」は `member_id` と名付ける。どちらにも `members.id` を入れる
 ※ すべてのテーブルに `created_at` と `updated_at` を持つ。DSQL はトリガーが使えないので、アプリが書き込むたびに入れる
 
 - S3: 動画とサムネイル
 - 撮影日時は UTC で保存し、日本時間で表示する
-- 家族を除外しても、`videos` の行と動画は残す
+- `members` の行は、家族が初めてログインしたとき (`/auth/callback`) に Cognito の情報から作る
+- 家族を除外しても、`members` と `videos` の行と動画は残す。除外したかどうかは Cognito の無効化で判断する
 
 ## Lifecycle
 
