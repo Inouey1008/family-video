@@ -47,7 +47,6 @@ flowchart LR
 判断の理由: [ADR-0008](adr/0008-iac-environments.md)
 
 - 環境は `dev` と `prod` の 2 つ。同じ AWS アカウントに置き、リソース名・IAM ロール・GitHub Environment で分ける
-- 独自ドメインは使わない。CloudFront の既定の URL を使い、リポジトリには書かない
 
 ## CI/CD
 
