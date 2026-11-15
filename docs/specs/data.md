@@ -40,11 +40,11 @@ erDiagram
 stateDiagram-v2
   [*] --> ready: アップロード完了
   ready --> deleted: 削除 (deleted_at を記録)
-  deleted --> ready: 30 日以内に復元
+  deleted --> ready: 30 日以内に家族が画面から戻す
   deleted --> [*]: 30 日後に完全削除
 ```
 
-- 削除した動画は一覧に出さない。復元は `cmd/task` で行う ([Operations](operations.md))
+- 削除した動画は通常の一覧に出さず、「削除した動画」の画面に 30 日間出す。家族は誰が削除した動画でも、その画面から戻せる ([UI](ui.md))
 - 完全削除は、EventBridge Scheduler が同じ Lambda を日次に呼んで行う。30 日を過ぎた行と、S3 の全バージョン (古いバージョンを含む) を消す
 - 完全削除した行は、DSQL のバックアップに最大 7 日残る
 

@@ -103,4 +103,4 @@ flowchart LR
 - `prod` の Environment は、タグ (`v*`) からの実行だけを受け付け、Actions の画面で承認するまで止まる。`task.yml` も、実行するときにリリースのタグを選ぶ
 - キャッシュの無効化は、`service-worker.js` などの差し替えを反映するため、必要なら行う。ロールバックは、エイリアスを前のバージョンに戻す
 - マイグレーションは、デプロイのジョブが Lambda の更新前に実行する。前のバージョンでも動く形で進める ([Data](specs/data.md))。DSQL は IAM 認証で接続できるので、マイグレーション用の Lambda は持たない
-- 招待と復旧は Cognito のコンソールか CLI で、メンバーの除外と動画の復元は `cmd/task` で行う。管理用の Lambda は持たない
+- 招待と復旧は Cognito のコンソールか CLI で、メンバーの除外は `cmd/task` で行う。管理用の Lambda は持たない
