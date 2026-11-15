@@ -88,6 +88,7 @@ GitHub Actions で、AWS へは OIDC で接続する。ロールは読み取り�
 | `ci.yml` (未作成) | PR | `go test`・`govulncheck`・`terraform plan` (読み取り専用。ログには変更の件数だけを出す) |
 | `deploy.yml` (未作成) | main へのマージ / タグ (`v*`) | `dev` / `prod` へデプロイ (下の図) |
 | `task.yml` (未作成) | 手動実行 | `cmd/task` ([Operations](specs/operations.md)) |
+| `e2e.yml` (未作成) | 手動実行 | `dev` への E2E ([Operations](specs/operations.md)) |
 
 ```mermaid
 flowchart LR
