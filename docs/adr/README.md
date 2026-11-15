@@ -14,7 +14,7 @@ family-video で、あとから変えにくい大きな技術判断の記録。�
 | [0008](0008-iac-environments.md) | Terraform で構築し、dev / prod は同じ AWS アカウントで分ける | Accepted |
 | [0009](0009-observability.md) | 監視は CloudWatch の標準機能だけで構成する | Accepted |
 | [0010](0010-abuse-protection.md) | 乱用対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
-| [0011](0011-repository-ci.md) | GitHub の public モノレポ、Actions + OIDC、レビューは `@claude` で頼む | Accepted |
+| [0011](0011-repository-ci.md) | GitHub の public モノレポと Actions + OIDC | Accepted |
 
 ## 変更するとき
 

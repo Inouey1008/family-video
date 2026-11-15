@@ -133,6 +133,3 @@ family-video/
 
 - GitHub Actions と OIDC を使う。`dev` と `prod` で GitHub Environment ごとに、OIDC のロールと変数を分ける
 - 手動で実行する作業は、`task.yml` (workflow_dispatch) で `cmd/task` を実行する。OIDC のロールで接続し、`prod` は Environment の承認を通す ([Operations](specs/operations.md))
-- リポジトリの設定で、Issue を作れる人を書き込み権限のある人だけに制限する
-- 「GitHub Actions に PR の作成と承認を許可する」はオフにする
-- PR の作成をコラボレーターのみに制限した状態で、Dependabot の PR が作られることを確認する (#9)
