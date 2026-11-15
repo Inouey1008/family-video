@@ -38,8 +38,19 @@ flowchart LR
   PWA -.->|"署名付き URL で PUT"| S3M
 ```
 
-- サーバーは Go で書いた Lambda 1 つ。画面の HTML も Lambda が組み立てて返す (`html/template` + htmx)。npm などのフロントエンドのビルドは使わない
-- DB は Aurora DSQL
+## Tech Stack
+
+| 区分 | 技術 | ADR |
+|---|---|---|
+| FE | `html/template` + htmx。HTML はサーバーが組み立てる (SPA にしない) | [0002](adr/0002-client-pwa.md) / [0004](adr/0004-frontend-htmx.md) |
+| BE | Go (Lambda 1 つ) | [0003](adr/0003-backend-go.md) |
+| API | API Gateway (HTTP API) | [0007](adr/0007-video-storage-delivery.md) |
+| DB | Aurora DSQL | [0005](adr/0005-database-dsql.md) |
+| 認証 | Cognito (パスキー) | [0006](adr/0006-auth-cognito.md) |
+| 動画の保存・配信 | S3 + CloudFront | [0007](adr/0007-video-storage-delivery.md) |
+| 監視 | CloudWatch | [0009](adr/0009-observability.md) |
+| IaC | Terraform | [0008](adr/0008-iac-environments.md) |
+| CI/CD | GitHub Actions | [0011](adr/0011-repository-ci.md) |
 
 ## Environments
 
