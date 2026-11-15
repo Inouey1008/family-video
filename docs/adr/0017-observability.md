@@ -1,4 +1,4 @@
-# ADR-0016: 監視は CloudWatch の標準機能だけで構成する
+# ADR-0017: 監視は CloudWatch の標準機能だけで構成する
 
 - Status: Accepted
 - Date: 2026-11-15

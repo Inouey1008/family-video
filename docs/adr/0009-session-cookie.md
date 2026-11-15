@@ -1,4 +1,4 @@
-# ADR-0008: ログイン状態は HttpOnly Cookie で保持する
+# ADR-0009: ログイン状態は HttpOnly Cookie で保持する
 
 - Status: Accepted
 - Date: 2026-11-15

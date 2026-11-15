@@ -1,4 +1,4 @@
-# ADR-0013: 動画の配信とアップロードは、署名付き URL で行う
+# ADR-0014: 動画の配信とアップロードは、署名付き URL で行う
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -6,7 +6,7 @@
 ## Context
 
 - 動画はログインした家族しか取得できない (PRD の Security)
-- 動画は S3 に置き ([ADR-0011](0011-video-storage.md))、入り口は CloudFront にする ([ADR-0012](0012-entry.md))
+- 動画は S3 に置き ([ADR-0012](0012-video-storage.md))、入り口は CloudFront にする ([ADR-0013](0013-entry.md))
 - 動画は API Gateway (10 MB) と Lambda (6 MB) のペイロード制限を超える
 
 ## Decision

@@ -1,4 +1,4 @@
-# ADR-0012: 入り口は CloudFront の 1 つにする
+# ADR-0013: 入り口は CloudFront の 1 つにする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -25,7 +25,7 @@
 
 - CloudFront の Always Free (毎月データ転送 1 TB、2026-11-15 に確認) に収まる範囲では、配信の固定費がかからない。
 - CloudFront のディストリビューションを作り直すと、URL が変わる。
-- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0014](0014-origin-lock.md) を参照。
+- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0015](0015-origin-lock.md) を参照。
 
 ## References
 

@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。一覧・再生・ダウンロード・お気に入り。
 
-判断の理由: [ADR-0013](../adr/0013-video-transfer.md)
+判断の理由: [ADR-0014](../adr/0014-video-transfer.md)
 
 ## List
 
