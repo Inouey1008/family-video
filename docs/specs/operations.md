@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。手動で行う作業とテスト。
 
-判断の理由: [ADR-0019](../adr/0019-environments.md) / [ADR-0021](../adr/0021-manual-tasks.md)
+判断の理由: [ADR-0025](../adr/0025-environments.md) / [ADR-0028](../adr/0028-manual-tasks.md)
 
 ## Runbook
 

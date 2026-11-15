@@ -1,4 +1,4 @@
-# ADR-0013: 入り口は CloudFront の 1 つにする
+# ADR-0016: 入り口は CloudFront の 1 つにする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -11,21 +11,17 @@
 ## Decision
 
 - 入り口は CloudFront の 1 つにまとめ、パスごとに S3 と API へ振り分ける。同一オリジンなので CORS は要らない。
-- API は API Gateway の HTTP API にする。
-- 独自ドメインは使わない。URL は CloudFront の既定のものを使い、公開リポジトリには書かない。
 
 ## Alternatives
 
 | 案 | 選ばなかった理由 |
 |---|---|
-| Lambda 関数 URL + OAC | POST にペイロードの署名が必要になる |
-| 独自ドメイン | ドメインの登録料と DNS の費用がかかる。URL は家族に一度伝えれば済む |
+| S3 と API を別の URL で公開する | CORS の設定が要り、Cookie の扱いも複雑になる |
 
 ## Consequences
 
 - CloudFront の Always Free (毎月データ転送 1 TB、2026-11-15 に確認) に収まる範囲では、配信の固定費がかからない。
-- CloudFront のディストリビューションを作り直すと、URL が変わる。
-- API Gateway の既定のエンドポイントは公開されたままになる。直接のアクセスへの対策は [ADR-0015](0015-origin-lock.md) を参照。
+- API の種類は [ADR-0017](0017-api-http.md)、URL は [ADR-0018](0018-no-custom-domain.md) を参照。
 
 ## References
 

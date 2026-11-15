@@ -1,4 +1,4 @@
-# ADR-0019: dev と prod は同じ AWS アカウントで分ける
+# ADR-0025: dev と prod は同じ AWS アカウントで分ける
 
 - Status: Accepted
 - Date: 2026-11-15

@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。アップロードと再開。
 
-判断の理由: [ADR-0014](../adr/0014-video-transfer.md)
+判断の理由: [ADR-0019](../adr/0019-video-transfer.md)
 
 ```mermaid
 sequenceDiagram
