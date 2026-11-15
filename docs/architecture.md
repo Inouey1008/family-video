@@ -61,8 +61,8 @@ flowchart LR
 ```mermaid
 flowchart LR
   subgraph GH["GitHub"]
-    ED["Environment: dev<br/>環境ごとの値"]
-    EP["Environment: prod<br/>環境ごとの値・承認"]
+    ED["Environment: dev<br/>変数 (ロールの ARN など)"]
+    EP["Environment: prod<br/>変数・デプロイ前の承認"]
   end
   subgraph AWS["AWS アカウント (1 つ)"]
     RD["IAM ロール: dev"]
