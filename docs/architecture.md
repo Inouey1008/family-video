@@ -56,7 +56,35 @@ flowchart LR
 
 判断の理由: [ADR-0008](adr/0008-iac-environments.md)
 
-- 環境は `dev` と `prod` の 2 つ。同じ AWS アカウントに置き、リソース名・IAM ロール・GitHub Environment で分ける
+環境は `dev` と `prod` の 2 つ。同じ AWS アカウントに置き、GitHub Environment・IAM ロール・リソース名で分ける。
+
+```mermaid
+flowchart LR
+  subgraph GH["GitHub"]
+    PR["PR"]
+    MAIN["main へのマージ"]
+    TAG["タグ (v*)"]
+    ED["Environment: dev<br/>環境ごとの値"]
+    EP["Environment: prod<br/>環境ごとの値・承認"]
+  end
+  subgraph AWS["AWS アカウント (1 つ)"]
+    RR["IAM ロール: 読み取り専用"]
+    RD["IAM ロール: dev"]
+    RP["IAM ロール: prod"]
+    D["dev のリソース<br/>(名前に dev が付く)"]
+    P["prod のリソース<br/>(名前に prod が付く)"]
+  end
+  PR -->|"OIDC"| RR
+  MAIN --> ED -->|"OIDC"| RD
+  TAG --> EP -->|"OIDC"| RP
+  RR -.->|"plan で読むだけ"| D
+  RR -.-> P
+  RD -->|"デプロイ"| D
+  RP -->|"デプロイ"| P
+```
+
+- 環境ごとの値は GitHub Environment の変数に置き、リポジトリには書かない
+- 各ロールは自分の環境のリソースだけを変更できる。`prod` のロールはタグからの実行に限る
 
 ## CI/CD
 
@@ -79,7 +107,7 @@ flowchart LR
   S --> I["CloudFront のキャッシュの無効化 (必要なら)"]
 ```
 
-- `prod` は Environment の承認を通す。`prod` のロールはタグからの実行だけに限る
+- `prod` は Environment の承認を通す
 - キャッシュの無効化は、`service-worker.js` などの差し替えを反映するため、必要なら行う。ロールバックは、エイリアスを前のバージョンに戻す
 - マイグレーションは、デプロイのジョブが Lambda の更新前に実行する。前のバージョンでも動く形で進める ([Data](specs/data.md))。DSQL は IAM 認証で接続できるので、マイグレーション用の Lambda は持たない
 - 招待と復旧は Cognito のコンソールか CLI で、メンバーの除外と動画の復元は `cmd/task` で行う。管理用の Lambda は持たない
