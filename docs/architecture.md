@@ -4,6 +4,7 @@
 
 | 文書 | 内容 |
 |---|---|
+| [ui.md](specs/ui.md) | 画面の一覧・遷移・画面ごとの要素と状態 |
 | [upload.md](specs/upload.md) | アップロード・再開 |
 | [playback.md](specs/playback.md) | 一覧・再生・ダウンロード・お気に入り |
 | [data.md](specs/data.md) | 保存する情報・削除・バックアップ・保存料 |
