@@ -5,38 +5,27 @@
 
 ## Context
 
-- PRD の Security: 不正アクセス・乱用・課金の暴走を防ぐ。日本国内からのアクセスだけを許可する。
-- PRD の Cost: 固定費はほぼ 0 円にする。
-- アップロードの本数と容量には上限を設けないので、保存量の増加は費用の通知で把握する。
+PRD の Security は、不正アクセス・乱用・課金の暴走を防ぎ、日本国内からのアクセスだけを許可すること。固定費はほぼ 0 円にしたい。
 
 ## Decision
 
-- API Gateway のステージ全体に既定のスロットリングを設定し、負荷の高いルートにはさらに厳しい値をルートごとに設定する。
-- Go 側で利用者ごとの制限を判定し、Lambda の予約同時実行数で全体の上限を付ける。上限を超えたら `429` と `Retry-After` を返す。
-- 地域制限は CloudFront の機能で、日本 (`JP`) だけを許可する。追加料金はかからない。
-- CloudFront からオリジンへのリクエストに秘密のカスタムヘッダー (`X-Origin-Verify`) を付け、Go の middleware で最初に検証する。API Gateway に直接アクセスされても地域制限を回避されないようにする。
-- WAF は使わない。
+- API Gateway のスロットリング、Go での利用者ごとの制限、Lambda の予約同時実行数で、乱用と課金の暴走を防ぐ。
+- 地域制限は CloudFront の機能で、日本 (`JP`) だけを許可する。
+- CloudFront からオリジンへ秘密のヘッダーを付け、Go で検証する。API Gateway への直接アクセスで地域制限を回避されないようにする。
 
 ## Alternatives
 
 | 案 | 選ばなかった理由 |
 |---|---|
-| WAF (レートベースのルール・Bot Control・CAPTCHA) | Web ACL ごとに月額の固定費がかかる |
-| WAF の地域一致ルール | 同上。CloudFront の地域制限なら追加料金がない |
-| REST API の使用量プラン | 個別の比較は記録していない。HTTP API のスロットリングを使う |
+| WAF (レートベースのルール・Bot Control・地域一致ルール) | Web ACL ごとに月額の固定費がかかる |
+| REST API の使用量プラン | 個別の比較は記録していない |
 
 ## Consequences
 
-- 独自ドメインを使わない ([ADR-0008](0008-iac-environments.md)) ので、API Gateway の既定のエンドポイントは無効にできない。オリジン検証ヘッダーが唯一の対策になる。ヘッダーの値は SSM Parameter Store に置き、定期的に入れ替える。
-- Terraform では `throttling_burst_limit` と `throttling_rate_limit` を必ず明記する。消すと 0 になり、すべての通信がブロックされる。
-- 海外へ旅行するときは、Terraform で一時的に旅行先の国を許可リストに加える。
-- iCloud プライベートリレーを使う端末が日本と判定されるかを、リリース前に確認する。
-- 具体的な値と実装の細目は [設計書](../specs/security.md) にまとめる。値は運用しながら調整する。
+- 独自ドメインを使わない ([ADR-0008](0008-iac-environments.md)) ので、既定のエンドポイントを無効にできない。オリジン検証ヘッダーが直接アクセスへの唯一の対策になる。
+- 値や旅行時の扱いなどの細目は [設計書](../specs/security.md) を参照。
 
 ## References
 
 - [HTTP API のスロットリング](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-throttling.html)
 - [CloudFront の地域制限](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistValuesEnableGeoRestriction.html)
-- [CloudFront を使った地域制限の方法 (AWS)](https://aws.amazon.com/developer/application-security-performance/articles/geo-blocking)
-- [API Gateway と境界防御サービスで API を保護する (AWS Security Blog)](https://aws.amazon.com/blogs/security/protect-apis-with-amazon-api-gateway-and-perimeter-protection-services)
-- [HTTP API の既定のエンドポイントを無効にする](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-disable-default-endpoint.html)

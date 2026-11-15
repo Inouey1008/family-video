@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-family-video で、あとから変えにくい大きな技術判断の記録。要件は [PRD](../prd.md)、全体構成と方式の細目は [設計書](../architecture.md) にある。
+あとから変えにくい大きな技術判断の記録。要件は [PRD](../prd.md)、全体構成は [設計書](../architecture.md) にある。
 
 | 番号 | タイトル | Status |
 |---|---|---|
@@ -16,8 +16,4 @@ family-video で、あとから変えにくい大きな技術判断の記録。�
 | [0010](0010-abuse-protection.md) | 乱用対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
 | [0011](0011-repository-ci.md) | GitHub の public モノレポと Actions + OIDC | Accepted |
 
-## 変更するとき
-
-- 決定済みの ADR は書き換えない。新しい ADR を足し、古い ADR の Status を `Superseded by ADR-XXXX` にする。
-- 誤字やリンク切れの修正は、そのまま直してよい。
-- 書式は、Status・Date のあとに Context・Decision・Alternatives・Consequences (必要なら References) を置く。
+変えるときは ADR を書き換えず、新しい ADR を足して古い ADR の Status を `Superseded by ADR-XXXX` にする。
