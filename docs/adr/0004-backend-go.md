@@ -6,7 +6,7 @@
 ## Context
 
 - 保守に時間をかけない (PRD の Maintenance)。言語ランタイムやコンテナのベースイメージを、定期的に更新する手間を避けたい
-- 外部の部品を最小限にする (PRD の Maintenance)
+- 外部依存を最小限にする (PRD の Maintenance)
 - 画面の HTML はサーバーが組み立てる ([ADR-0003](0003-mpa.md))
 
 ## Decision
