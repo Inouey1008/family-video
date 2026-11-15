@@ -39,7 +39,7 @@ flowchart LR
 ```
 
 - サーバーは Go で書いた Lambda 1 つ。画面の HTML も Lambda が組み立てて返す (`html/template` + htmx)。npm などのフロントエンドのビルドは使わない
-- DB は Aurora DSQL。PostgreSQL の機能の一部しか使えないので、SQL は基本的な読み書きに限る
+- DB は Aurora DSQL
 - `service-worker.js` は `/static/` ではなくルート (`/`) に置く。Service Worker は、置いた場所より下のページしか扱えないため
 
 ## Environments
