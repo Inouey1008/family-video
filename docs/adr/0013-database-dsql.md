@@ -7,7 +7,7 @@
 
 - 使い慣れている RDB (PostgreSQL) の SQL で、動画のメタデータを扱いたい
 - 固定費をほぼ 0 円にする
-- VPC は使わない ([ADR-0006](0006-lambda.md))
+- VPC は使わない ([ADR-0005](0005-lambda.md))
 
 ## Decision
 

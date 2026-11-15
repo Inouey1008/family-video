@@ -1,4 +1,4 @@
-# ADR-0003: クライアントは Web アプリにし、サポートは iPhone の Safari だけにする
+# ADR-0002: クライアントは Web アプリにし、サポートは iPhone の Safari だけにする
 
 - Status: Accepted
 - Date: 2026-11-15

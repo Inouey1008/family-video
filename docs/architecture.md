@@ -13,7 +13,7 @@
 
 ## Architecture
 
-判断の理由: [ADR-0001](adr/0001-serverless.md) / [ADR-0002](adr/0002-cloud-aws.md) / [ADR-0006](adr/0006-lambda.md) / [ADR-0008](adr/0008-entry-delivery.md)
+判断の理由: [ADR-0001](adr/0001-serverless.md) / [ADR-0005](adr/0005-lambda.md) / [ADR-0006](adr/0006-cloud-aws.md) / [ADR-0008](adr/0008-entry-delivery.md)
 
 入り口は CloudFront の 1 つで、パスごとに S3 と API へ振り分ける (同一オリジンなので CORS は要らない)。アップロードだけは署名付き URL で S3 に直接送る。
 
@@ -42,8 +42,8 @@ flowchart LR
 
 | 区分 | 技術 | ADR |
 |---|---|---|
-| FE | `html/template` + htmx。MPA (HTML はサーバーが組み立てる) | [0004](adr/0004-mpa.md) / [0007](adr/0007-htmx.md) |
-| BE | Go (Lambda 1 つ) | [0005](adr/0005-backend-go.md) / [0006](adr/0006-lambda.md) |
+| FE | `html/template` + htmx。MPA (HTML はサーバーが組み立てる) | [0003](adr/0003-mpa.md) / [0007](adr/0007-htmx.md) |
+| BE | Go (Lambda 1 つ) | [0004](adr/0004-backend-go.md) / [0005](adr/0005-lambda.md) |
 | API | API Gateway (HTTP API) | [0008](adr/0008-entry-delivery.md) |
 | DB | Aurora DSQL | [0013](adr/0013-database-dsql.md) / [0014](adr/0014-database-backup.md) |
 | 認証 | Cognito (パスキー)・HttpOnly Cookie | [0011](adr/0011-auth-cognito.md) / [0012](adr/0012-session-cookie.md) |
