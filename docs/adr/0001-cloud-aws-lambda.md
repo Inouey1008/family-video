@@ -19,7 +19,10 @@
 
 | 案 | 選ばなかった理由 |
 |---|---|
-| Cloudflare / Firebase / Supabase / VPS | Cloudflare は Go が Wasm 経由になる。ほかは個別の比較を記録していない |
+| Cloudflare Workers | Go が Wasm 経由になる |
+| Firebase | DB を SQL で扱うと Cloud SQL になり、インスタンスの固定費がかかる |
+| Supabase | 無料プランは 1 週間使わないと止まる。有料プランは月額の固定費がかかる |
+| VPS | 使わなくても月額の固定費がかかる。OS の保守を自分で行う |
 | EC2 / Fargate | 動いている間ずっと課金され、アクセスがなくても固定費になる。OS やベースイメージのパッチを自分で当てる必要がある |
 | Lambda in VPC + PrivateLink | NAT などの固定費がかかる |
 

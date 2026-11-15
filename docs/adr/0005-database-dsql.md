@@ -5,18 +5,23 @@
 
 ## Context
 
-動画のメタデータを SQL で扱い、固定費をほぼ 0 円にしたい。VPC は使わない ([ADR-0001](0001-cloud-aws-lambda.md))。
+- 使い慣れている RDB (PostgreSQL) の SQL で、動画のメタデータを扱いたい
+- 固定費をほぼ 0 円にする
+- VPC は使わない ([ADR-0001](0001-cloud-aws-lambda.md))
 
 ## Decision
 
-- DB は Aurora DSQL にする。無料枠 (毎月 100,000 DPU と 1 GB) に期限はない。
+- DB は Aurora DSQL にする。PostgreSQL と互換があり、無料枠 (毎月 100,000 DPU と 1 GB) に期限はない。
 - IAM 認証で接続する。
 
 ## Alternatives
 
 | 案 | 選ばなかった理由 |
 |---|---|
-| DynamoDB | SQL が使える点で DSQL を選んだ |
+| DynamoDB | RDB ではなく、SQL で扱えない |
+| RDS for PostgreSQL / Aurora Serverless v2 | VPC が要る。RDS はインスタンスの固定費がかかる |
+| Supabase / Neon | AWS の外にあり、IAM 認証が使えない。接続のパスワードを秘密情報として管理する必要がある。Supabase の無料プランは 1 週間使わないと止まる |
+| Turso / Cloudflare D1 | PostgreSQL ではなく SQLite 系。D1 は Cloudflare Workers から使う前提 |
 
 ## Consequences
 
