@@ -12,7 +12,7 @@
 ## Decision
 
 - 処理は AWS Lambda にし、OS-only ランタイム (`provided.al2023`) に zip でデプロイする。Go のバイナリをそのまま OS の上で動かし、OS の保守は AWS が行う。
-- VPC・NAT ゲートウェイは使わない。DB・S3・Cognito には IAM の認証で接続する。
+- VPC・NAT ゲートウェイは使わない。ほかの AWS のサービスには、VPC を通さずに IAM の認証で接続する。
 
 ## Alternatives
 
