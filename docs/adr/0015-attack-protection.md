@@ -1,4 +1,4 @@
-# ADR-0014: 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う
+# ADR-0015: 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -23,7 +23,7 @@
 
 ## Consequences
 
-- 地域制限は CloudFront を通るリクエストにしか効かない。API Gateway への直接のアクセスは [ADR-0013](0013-origin-lock.md) で防ぐ。
+- 地域制限は CloudFront を通るリクエストにしか効かない。API Gateway への直接のアクセスは [ADR-0014](0014-origin-lock.md) で防ぐ。
 - 値や旅行時の扱いなどの細目は [設計書](../specs/security.md) を参照。
 
 ## References

@@ -15,13 +15,14 @@
 | [0009](0009-database-dsql.md) | DB に Aurora DSQL を使う | Accepted |
 | [0010](0010-database-backup.md) | DB は AWS Backup で毎日バックアップする | Accepted |
 | [0011](0011-video-storage.md) | 動画は S3 に置く | Accepted |
-| [0012](0012-entry-delivery.md) | 入り口は CloudFront の 1 つにし、動画は署名付き URL でやり取りする | Accepted |
-| [0013](0013-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |
-| [0014](0014-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
-| [0015](0015-observability.md) | 監視は CloudWatch の標準機能だけで構成する | Accepted |
-| [0016](0016-iac-terraform.md) | インフラは Terraform で構築する | Accepted |
-| [0017](0017-environments.md) | dev と prod は同じ AWS アカウントで分ける | Accepted |
-| [0018](0018-repository-ci.md) | GitHub の public モノレポと Actions + OIDC | Accepted |
-| [0019](0019-manual-tasks.md) | 手動の作業はコードにして実行し、対話型のコンソールは設けない | Accepted |
+| [0012](0012-entry.md) | 入り口は CloudFront の 1 つにする | Accepted |
+| [0013](0013-video-transfer.md) | 動画の配信とアップロードは、署名付き URL で行う | Accepted |
+| [0014](0014-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |
+| [0015](0015-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
+| [0016](0016-observability.md) | 監視は CloudWatch の標準機能だけで構成する | Accepted |
+| [0017](0017-iac-terraform.md) | インフラは Terraform で構築する | Accepted |
+| [0018](0018-environments.md) | dev と prod は同じ AWS アカウントで分ける | Accepted |
+| [0019](0019-repository-ci.md) | GitHub の public モノレポと Actions + OIDC | Accepted |
+| [0020](0020-manual-tasks.md) | 手動の作業はコードにして実行し、対話型のコンソールは設けない | Accepted |
 
 変えるときは ADR を書き換えず、新しい ADR を足して古い ADR の Status を `Superseded by ADR-XXXX` にする。

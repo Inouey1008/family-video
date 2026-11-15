@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。認証・配信・権限・攻撃への対策。
 
-判断の理由: [ADR-0007](../adr/0007-auth-cognito.md) / [ADR-0008](../adr/0008-session-cookie.md) / [ADR-0012](../adr/0012-entry-delivery.md) / [ADR-0014](../adr/0014-attack-protection.md) / [ADR-0013](../adr/0013-origin-lock.md)
+判断の理由: [ADR-0007](../adr/0007-auth-cognito.md) / [ADR-0008](../adr/0008-session-cookie.md) / [ADR-0012](../adr/0012-entry.md) / [ADR-0013](../adr/0013-video-transfer.md) / [ADR-0015](../adr/0015-attack-protection.md) / [ADR-0014](../adr/0014-origin-lock.md)
 
 ## Authentication
 

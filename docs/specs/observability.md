@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。ログ・アラーム・通知。
 
-判断の理由: [ADR-0015](../adr/0015-observability.md)
+判断の理由: [ADR-0016](../adr/0016-observability.md)
 
 CloudWatch の標準機能だけで構成し、無料枠に収める。外部のサービスと追加の SDK は使わない。
 
