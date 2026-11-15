@@ -19,6 +19,9 @@
 | 案 | 選ばなかった理由 |
 |---|---|
 | Cloudflare Workers | Go が Wasm 経由になり、バイナリをそのまま動かせない |
+| Google Cloud Run | アクセスがなければ 0 台まで減り、無料枠もある。ただしコンテナイメージで動かすので、イメージの置き場所 (Artifact Registry) とベースイメージの管理が要る |
+| Fly.io | コンテナイメージで動かすので、ベースイメージの管理が要る。新しい組織には無料枠がない (月 5 ドル未満の請求は免除) |
+| Railway | Hobby プランは、使わなくても月 5 ドルの固定費がかかる。無料プランは月 1 ドル分の利用枠しかない |
 | Lambda のコンテナイメージ | ベースイメージのパッチを自分で当てる必要がある |
 | Lambda in VPC + PrivateLink | NAT やインターフェースエンドポイントの固定費がかかる |
 
@@ -32,3 +35,6 @@
 
 - [Lambda ランタイムと廃止予定日](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html)
 - [Lambda 料金](https://aws.amazon.com/lambda/pricing/)
+- [Cloud Run 料金](https://cloud.google.com/run/pricing)
+- [Fly.io 料金](https://docs.fly.io/about/pricing)
+- [Railway の料金プラン](https://docs.railway.com/pricing/plans)
