@@ -132,10 +132,6 @@ family-video/
 ### CI/CD
 
 - GitHub Actions と OIDC を使う。`dev` と `prod` で GitHub Environment ごとに、OIDC のロールと変数を分ける
-- PR のレビューは、`@claude` と書いて頼む。PR や Issue に `@claude` と書くと、`claude.yml` が応答する
-- main への直接 push は禁止し、PR を必須にする。CI が通らないとマージできないようにする
-- 必須の承認数は 0。Claude の指摘を確認してから、自分でマージする
-- 更新は Dependabot の PR で確認してから取り込む
 - 手動で実行する作業は、`task.yml` (workflow_dispatch) で `cmd/task` を実行する。OIDC のロールで接続し、`prod` は Environment の承認を通す ([Operations](specs/operations.md))
 - リポジトリの設定で、Issue を作れる人を書き込み権限のある人だけに制限する
 - 「GitHub Actions に PR の作成と承認を許可する」はオフにする
