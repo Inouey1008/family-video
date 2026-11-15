@@ -6,6 +6,40 @@
 
 ## Authentication
 
+### Login
+
+```mermaid
+sequenceDiagram
+  participant B as ブラウザ
+  participant A as API (Lambda)
+  participant C as Cognito
+
+  B->>A: GET /auth/login
+  A->>A: state・PKCE の鍵・nonce を乱数で作る
+  A-->>B: 3 つを Cookie に控え、Cognito のログイン画面へ移す<br/>(state・PKCE の鍵のハッシュ・nonce を付ける)
+  B->>C: パスキーでログイン
+  C-->>B: /auth/callback へ移す (code と state を付ける)
+  B->>A: GET /auth/callback
+  A->>A: state が Cookie の控えと同じか確かめる
+  A->>C: code をトークンに交換 (PKCE の鍵を送る)
+  C->>C: 鍵がハッシュと合うか確かめる
+  C-->>A: ID トークン・access token・refresh token
+  A->>A: ID トークンの nonce が控えと同じか確かめる
+  alt 3 つとも合う
+    A-->>B: トークンを HttpOnly Cookie に入れ、一覧へ移す
+  else どれかが合わない
+    A-->>B: ログインの失敗を表示する
+  end
+```
+
+| 値 | 防ぐこと |
+|---|---|
+| state | 攻撃者のアカウントの `code` を付けたリンクを踏ませ、攻撃者のアカウントでログインさせること (CSRF) |
+| PKCE | 途中で盗まれた `code` を、攻撃者がトークンに交換すること |
+| nonce | 古い ID トークンや盗まれた ID トークンを使い回すこと |
+
+### Session
+
 ```mermaid
 sequenceDiagram
   participant B as ブラウザ
@@ -31,7 +65,6 @@ sequenceDiagram
 - ログイン状態は HttpOnly Cookie で保持する。JWT の検証と認可は Lambda で行う
 - Cookie には access token (有効期限 15 分) と refresh token (30 日) を別々に入れる。access token が切れたら、Lambda が refresh token で取り直す。30 日を過ぎたら、パスキーでログインし直す
 - メンバーから外すときは、Cognito のユーザーを無効にし、refresh token を取り消す。残った access token も 15 分以内に切れる
-- `/auth/callback` で `state`・PKCE・`nonce` を検証する
 - ログインなしで通すのは `/auth/login`・`/auth/callback`・`/static/*` だけ。ほかはログイン画面へ飛ばし、DB には触れない
 
 ## Delivery
