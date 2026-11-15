@@ -74,16 +74,51 @@ flowchart LR
 - アカウント ID やドメインなどの環境固有の値は、GitHub の Environment 変数から渡す。`*.tfstate` と `*.tfvars` はコミットしない
 - Terraform 本体と AWS プロバイダーのバージョンは固定し、`.terraform.lock.hcl` をコミットする
 
-## Deployment
+## CI/CD
 
-| きっかけ | 内容 |
-|---|---|
-| PR | 読み取り専用のロールで `terraform plan`・`go test`・`govulncheck` を実行する |
-| main へのマージ | `dev` に自動でデプロイする (`terraform apply` → Go のビルド → マイグレーション → Lambda の更新 → static の同期) |
-| タグ (`v*`) | `prod` にデプロイする。`prod` のロールはタグからの実行だけに限定する |
+判断の理由: [ADR-0011](adr/0011-repository-ci.md)
 
-- マイグレーションは、デプロイのジョブ (GitHub Actions) が OIDC のロールで、Lambda を更新する前に `cmd/migrate` を実行して行う。DSQL は VPC の外にあり IAM 認証で接続できるので、マイグレーション用の Lambda は持たない
-- 管理の操作 (招待・除外・復旧) も Runbook に沿ってコンソールか CLI で行うので、管理用の Lambda は持たない
+GitHub Actions で、AWS への認証は OIDC で行う。ロールは、読み取り専用・`dev`・`prod` の 3 つに分け、長期のアクセスキーは発行しない。
+
+| ワークフロー | きっかけ | ロール |
+|---|---|---|
+| `.github/workflows/ci.yml` (未作成) | PR | 読み取り専用 |
+| `.github/workflows/deploy.yml` (未作成) | main へのマージ / タグ (`v*`) | `dev` / `prod` |
+| `.github/workflows/task.yml` (未作成) | 手動実行 (workflow_dispatch) | `dev` / `prod` |
+| `.github/workflows/claude.yml` (既存) | PR や Issue のコメント | AWS には接続しない |
+
+### ci.yml
+
+PR のたびに、次を実行する。
+
+1. `go test` (単体テストと、ローカルの PostgreSQL を使った結合テスト)
+2. `govulncheck`
+3. `terraform plan` (読み取り専用のロール)
+
+### deploy.yml
+
+main へのマージで `dev` に、タグ (`v*`) で `prod` にデプロイする。`prod` は GitHub Environment の承認を通す。`prod` のロールは、タグからの実行だけに限る。
+
+```mermaid
+flowchart LR
+  T["main へのマージ / タグ (v*)"] --> A["terraform apply"]
+  A --> B["Go のビルド"]
+  B --> M["マイグレーション (cmd/migrate)"]
+  M --> L["Lambda の新しいバージョンを発行し、エイリアスを切り替え"]
+  L --> S["static の S3 同期"]
+  S --> I["CloudFront のキャッシュの無効化 (必要なら)"]
+```
+
+- キャッシュの無効化は、`service-worker.js` などの差し替えを反映するために、必要なら行う
+- マイグレーションは、デプロイのジョブが OIDC のロールで、Lambda を更新する前に実行する。DSQL は VPC の外にあり IAM 認証で接続できるので、マイグレーション用の Lambda は持たない
+- 招待と復旧は Cognito のコンソールか CLI で、メンバーの除外と動画の復元は `cmd/task` で行う ([Operations](specs/operations.md))。管理用の Lambda は持たない
+
+### task.yml
+
+手動で実行する作業 (`cmd/task`) 用。入力は、作業の名前・環境・ドライランかどうか。`prod` は GitHub Environment の承認を通す。詳細は [Operations](specs/operations.md) にある。
+
+### Notes
+
 - Lambda はバージョンとエイリアスで管理する。デプロイに失敗したら、エイリアスを前のバージョンに戻す
 - マイグレーションは前のバージョンのコードでも動く形で進める ([Data](specs/data.md))
 - DSQL の制限はローカルの PostgreSQL では検出されないので、マイグレーションの SQL は `dev` の DSQL で確認する
@@ -128,8 +163,3 @@ family-video/
 ├─ LICENSE                     # MIT
 └─ README.md
 ```
-
-### CI/CD
-
-- GitHub Actions と OIDC を使う。`dev` と `prod` で GitHub Environment ごとに、OIDC のロールと変数を分ける
-- 手動で実行する作業は、`task.yml` (workflow_dispatch) で `cmd/task` を実行する。OIDC のロールで接続し、`prod` は Environment の承認を通す ([Operations](specs/operations.md))
