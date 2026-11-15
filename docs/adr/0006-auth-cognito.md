@@ -1,4 +1,4 @@
-# ADR-0006: 認証は Cognito (招待制・パスキー) と HttpOnly Cookie にする
+# ADR-0006: 認証は Cognito にし、招待制とパスキーにする
 
 - Status: Accepted
 - Date: 2026-11-15
@@ -11,19 +11,18 @@ PRD の Goals は、招待した家族だけが動画を見られること。ス
 
 - Amazon Cognito の Essentials プランにする (月 10,000 MAU まで無料、期限なし)。
 - 開発者が家族を招待する。自己サインアップは無効にする。
-- パスキーを主にし、予備はパスワードと TOTP。ログイン状態は HttpOnly Cookie で保持し、JWT の検証と認可は Go 側で行う。
+- パスキーを主にし、予備はパスワードと TOTP。
 
 ## Alternatives
 
 | 案 | 選ばなかった理由 |
 |---|---|
-| PKCE + JS でのトークン保持 | トークンを JS から読み取れてしまう |
 | Cognito の脅威保護 (Plus) | 追加料金がかかる。招待制とパスキーで代わりとする |
 
 ## Consequences
 
 - 家族の追加・削除とアカウントの復旧は、開発者が AWS 側で行う。手順は手順書にまとめる。
-- Cookie・CSRF 対策などの細目は [設計書](../specs/security.md) を参照。
+- ログイン状態の保持は [ADR-0014](0014-session-cookie.md) を参照。
 
 ## References
 

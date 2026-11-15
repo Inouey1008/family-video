@@ -1,8 +1,8 @@
 # Security
 
-[設計書](../architecture.md) の詳細。認証・配信・権限・乱用対策。
+[設計書](../architecture.md) の詳細。認証・配信・権限・攻撃への対策。
 
-判断の理由: [ADR-0006](../adr/0006-auth-cognito.md) / [ADR-0007](../adr/0007-video-storage-delivery.md) / [ADR-0010](../adr/0010-abuse-protection.md)
+判断の理由: [ADR-0006](../adr/0006-auth-cognito.md) / [ADR-0014](../adr/0014-session-cookie.md) / [ADR-0013](../adr/0013-entry-delivery.md) / [ADR-0010](../adr/0010-attack-protection.md)
 
 ## Authentication
 
@@ -27,7 +27,7 @@
 - IAM は Lambda ごとに最小権限。DSQL へは IAM 認証で、対象のクラスターだけに絞る
 - ルートユーザーは MFA を設定し、普段は使わない。通知のロールは CloudWatch の読み取りだけ
 
-## Abuse Protection
+## Attack Protection
 
 WAF は使わず、地域制限 → スロットリング → オリジン検証 → 予約同時実行数で防ぐ。
 

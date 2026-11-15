@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。手動で行う作業とテスト。
 
-判断の理由: [ADR-0008](../adr/0008-iac-environments.md)
+判断の理由: [ADR-0015](../adr/0015-environments.md)
 
 ## Runbook
 

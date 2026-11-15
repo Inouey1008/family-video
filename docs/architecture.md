@@ -7,13 +7,13 @@
 | [upload.md](specs/upload.md) | アップロード・再開 |
 | [playback.md](specs/playback.md) | 一覧・再生・ダウンロード・お気に入り |
 | [data.md](specs/data.md) | 保存する情報・削除・バックアップ・保存料 |
-| [security.md](specs/security.md) | 認証・配信・権限・乱用対策 |
+| [security.md](specs/security.md) | 認証・配信・権限・攻撃への対策 |
 | [observability.md](specs/observability.md) | ログ・アラーム・通知 |
 | [operations.md](specs/operations.md) | Runbook・手動の作業・テスト |
 
 ## Architecture
 
-判断の理由: [ADR-0001](adr/0001-cloud-aws-serverless.md) / [ADR-0007](adr/0007-video-storage-delivery.md)
+判断の理由: [ADR-0001](adr/0001-cloud-aws-lambda.md) / [ADR-0013](adr/0013-entry-delivery.md)
 
 入り口は CloudFront の 1 つで、パスごとに S3 と API へ振り分ける (同一オリジンなので CORS は要らない)。アップロードだけは署名付き URL で S3 に直接送る。
 
@@ -44,17 +44,17 @@ flowchart LR
 |---|---|---|
 | FE | `html/template` + htmx。HTML はサーバーが組み立てる (SPA にしない) | [0002](adr/0002-client-web.md) / [0004](adr/0004-frontend-htmx.md) |
 | BE | Go (Lambda 1 つ) | [0003](adr/0003-backend-go.md) |
-| API | API Gateway (HTTP API) | [0007](adr/0007-video-storage-delivery.md) |
-| DB | Aurora DSQL | [0005](adr/0005-database-dsql.md) |
-| 認証 | Cognito (パスキー) | [0006](adr/0006-auth-cognito.md) |
-| 動画の保存・配信 | S3 + CloudFront | [0007](adr/0007-video-storage-delivery.md) |
+| API | API Gateway (HTTP API) | [0013](adr/0013-entry-delivery.md) |
+| DB | Aurora DSQL | [0005](adr/0005-database-dsql.md) / [0012](adr/0012-database-backup.md) |
+| 認証 | Cognito (パスキー)・HttpOnly Cookie | [0006](adr/0006-auth-cognito.md) / [0014](adr/0014-session-cookie.md) |
+| 動画の保存・配信 | S3 + CloudFront | [0007](adr/0007-video-storage.md) / [0013](adr/0013-entry-delivery.md) |
 | 監視 | CloudWatch | [0009](adr/0009-observability.md) |
-| IaC | Terraform | [0008](adr/0008-iac-environments.md) |
+| IaC | Terraform | [0008](adr/0008-iac-terraform.md) |
 | CI/CD | GitHub Actions | [0011](adr/0011-repository-ci.md) |
 
 ## Environments
 
-判断の理由: [ADR-0008](adr/0008-iac-environments.md)
+判断の理由: [ADR-0015](adr/0015-environments.md)
 
 環境は `dev` と `prod` の 2 つ。同じ AWS アカウントに置き、GitHub Environment・IAM ロール・リソース名で分ける。
 
