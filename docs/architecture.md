@@ -61,8 +61,8 @@ flowchart LR
 ```mermaid
 flowchart LR
   subgraph GH["GitHub"]
-    ED["Environment: dev<br/>変数 (ロールの ARN など)"]
-    EP["Environment: prod<br/>変数・Actions の画面での承認"]
+    ED["Environment: dev<br/>変数・シークレット"]
+    EP["Environment: prod<br/>変数・シークレット<br/>タグからだけ実行・Actions の画面での承認"]
   end
   subgraph AWS["AWS アカウント (1 つ)"]
     RD["IAM ロール: dev"]
@@ -74,8 +74,8 @@ flowchart LR
   EP --> RP --> P
 ```
 
-- 環境ごとの値は GitHub Environment の変数に置き、リポジトリには書かない
-- 各ロールは自分の環境のリソースだけを変更できる
+- 環境ごとの値は GitHub Environment に置き、リポジトリには書かない。ロールの ARN などアカウント ID を含む値はシークレットにし、公開される Actions のログで伏せ字にする
+- 各ロールは自分の環境のリソースだけを変更できる。ロールを引き受けられるのは、同じ名前の Environment のジョブだけ (OIDC の `sub` で絞る)
 
 ## CI/CD
 
@@ -85,7 +85,7 @@ GitHub Actions で、AWS へは OIDC で接続する。ロールは読み取り�
 
 | ワークフロー | きっかけ | 内容 |
 |---|---|---|
-| `ci.yml` (未作成) | PR | `go test`・`govulncheck`・`terraform plan` (読み取り専用) |
+| `ci.yml` (未作成) | PR | `go test`・`govulncheck`・`terraform plan` (読み取り専用。ログには変更の件数だけを出す) |
 | `deploy.yml` (未作成) | main へのマージ / タグ (`v*`) | `dev` / `prod` へデプロイ (下の図) |
 | `task.yml` (未作成) | 手動実行 | `cmd/task` ([Operations](specs/operations.md)) |
 
@@ -98,7 +98,7 @@ flowchart LR
   S --> I["CloudFront のキャッシュの無効化 (必要なら)"]
 ```
 
-- `prod` へのデプロイは、Actions の画面で承認するまで止まる。`prod` のロールはタグからの実行だけに限る
+- `prod` の Environment は、タグ (`v*`) からの実行だけを受け付け、Actions の画面で承認するまで止まる。`task.yml` も、実行するときにリリースのタグを選ぶ
 - キャッシュの無効化は、`service-worker.js` などの差し替えを反映するため、必要なら行う。ロールバックは、エイリアスを前のバージョンに戻す
 - マイグレーションは、デプロイのジョブが Lambda の更新前に実行する。前のバージョンでも動く形で進める ([Data](specs/data.md))。DSQL は IAM 認証で接続できるので、マイグレーション用の Lambda は持たない
 - 招待と復旧は Cognito のコンソールか CLI で、メンバーの除外と動画の復元は `cmd/task` で行う。管理用の Lambda は持たない

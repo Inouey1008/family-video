@@ -11,7 +11,7 @@ PRD の Goals は、個人開発の成果物として公開できること。公
 
 - GitHub の public リポジトリで公開し、インフラ・アプリ・静的ファイルを 1 つのモノレポに置く。
 - CI/CD は GitHub Actions にし、AWS への認証は OIDC で行う (長期のアクセスキーなし)。
-- 環境固有の値は、GitHub の Environment 変数から渡す。
+- 環境固有の値は、GitHub の Environment の変数とシークレットから渡す。アカウント ID を含む値はシークレットにする。
 
 ## Alternatives
 
