@@ -78,7 +78,7 @@ flowchart LR
 - 環境ごとの値は GitHub Environment に置き、リポジトリには書かない。アカウント ID だけをシークレットにし、公開される Actions のログで伏せ字にする。ロールの ARN は命名規則から組み立てる
 - 各ロールは自分の環境のリソースだけを変更できる。ロールを引き受けられるのは、同じ名前の Environment のジョブだけ (OIDC の `sub` で絞る)
 - state は 1 つの S3 バケットをキー (`bootstrap/`・`dev/`・`prod/`) で分け、ロールごとに読み書きできるキーを絞る
-- bootstrap (state のバケット・OIDC・ロール・予算) は `terraform/initial_setup/` にあり、手元の SSO の管理者だけが apply する ([Bootstrap](runbook/bootstrap.md))
+- bootstrap (state のバケット・OIDC・ロール・予算) は `infra/terraform/initial_setup/` にあり、手元の SSO の管理者だけが apply する ([Bootstrap](runbook/bootstrap.md))
 
 ## CI/CD
 

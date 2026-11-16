@@ -1,6 +1,6 @@
 # Bootstrap
 
-state のバケット・GitHub OIDC のプロバイダー・IAM ロール・予算を作る手順。Terraform は `terraform/initial_setup/` にあり、手元の IAM Identity Center (SSO) の管理者だけが apply する。
+state のバケット・GitHub OIDC のプロバイダー・IAM ロール・予算を作る手順。Terraform は `infra/terraform/initial_setup/` にあり、手元の IAM Identity Center (SSO) の管理者だけが apply する。
 
 [設計書](../architecture.md) / [Operations](../specs/operations.md)
 
@@ -21,7 +21,7 @@ state のバケット・GitHub OIDC のプロバイダー・IAM ロール・予�
 2. 例のファイルをコピーし、値を入れる。どちらもコミットしない (gitignore 済み)
 
    ```sh
-   cd terraform/initial_setup
+   cd infra/terraform/initial_setup
    cp terraform.tfvars.example terraform.tfvars
    cp backend.hcl.example backend.hcl
    ```
@@ -55,7 +55,7 @@ terraform init -migrate-state -backend-config=backend.hcl
 ```
 
 1. `AWS_PROFILE` を設定し、`aws sso login` でログインする
-2. `terraform/initial_setup/backend_override.tf` (gitignore 済み) に local backend を書く
+2. `infra/terraform/initial_setup/backend_override.tf` (gitignore 済み) に local backend を書く
 
    ```hcl
    terraform {
@@ -99,5 +99,5 @@ terraform apply
 - `pull_request_target`・`workflow_run` のワークフローでは、`id-token: write` と `environment` を使わない。main の文脈でフォークのコードが動き、dev のロールを引き受けられてしまう
 - dev / prod のロールに IAM の権限 (Lambda の実行ロールの作成・`PassRole` など) を足すときは、ロール名の prefix の制限と permissions boundary を条件にする
 - 秘密の値は state に入れない (Secrets Manager の値は Terraform の外で入れる)。Lambda の環境変数にも秘密を入れない。`family-video-ci-readonly` は state と Lambda の設定を読めるため
-- bootstrap (`terraform/initial_setup/`) は CI で plan しない。手元の SSO の管理者だけが plan と apply をする
+- bootstrap (`infra/terraform/initial_setup/`) は CI で plan しない。手元の SSO の管理者だけが plan と apply をする
 - ロールの権限を足すたびに、この手順で bootstrap を apply する
