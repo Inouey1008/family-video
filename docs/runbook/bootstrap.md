@@ -43,6 +43,17 @@ state のバケット・IAM ロール・予算を作り、GitHub OIDC のプロ�
 | | `budget_notification_emails` | 予算の通知先のメール |
 | `backend.hcl` | `bucket` | `state_bucket_name` と同じ値 |
 
+## Cost Allocation Tag
+
+予算は、タグ `service = family-video` が付いた費用だけを数える。AWS アカウントを共有するほかのプロジェクトの費用を除くため。コスト配分タグ `service` を有効にする。アカウント全体の設定なので、Terraform では管理しない。
+
+- コンソール: Billing and Cost Management → Cost allocation tags で、ユーザー定義タグの `service` を Active にする
+- CLI:
+
+  ```sh
+  aws ce update-cost-allocation-tags-status --cost-allocation-tags-status TagKey=service,Status=Active
+  ```
+
 ## First Apply
 
 state のバケットは bootstrap 自身が作る。最初はローカルの state で apply し、バケットができてから S3 に移す。
@@ -103,6 +114,7 @@ terraform apply
 ## Cautions
 
 - 共有の OIDC プロバイダーは消さない・変えない。どのジョブがどのロールを借りられるかは、各ロールの信頼ポリシーの `sub` で絞る。プロバイダーを共有しても、ほかのリポジトリのジョブは family-video のロールを借りられない
+- コスト配分タグは、リソースに付いてから一覧に出るまで最大 24 時間ほどかかる。有効にした後の費用からしか集計されず、さかのぼらない。タグを付けられない費用は予算に入らない
 - `sensitive` が隠すのは表示だけで、state には平文で残る。state は暗号化 (SSE-S3) と権限で守る
 - `pull_request_target`・`workflow_run` のワークフローでは、`id-token: write` と `environment` を使わない。main の文脈でフォークのコードが動き、dev のロールを引き受けられてしまう
 - dev / prod のロールに IAM の権限 (Lambda の実行ロールの作成・`PassRole` など) を足すときは、ロール名の prefix の制限と permissions boundary を条件にする
