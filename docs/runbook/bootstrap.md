@@ -1,6 +1,6 @@
 # Bootstrap
 
-state のバケット・GitHub OIDC のプロバイダー・IAM ロール・予算を作る手順。Terraform は `infra/terraform/initial_setup/` にあり、手元の IAM Identity Center (SSO) の管理者だけが apply する。
+state のバケット・IAM ロール・予算を作り、GitHub OIDC のプロバイダーは既存のものを参照する (なければ作る) 手順。Terraform は `infra/terraform/initial_setup/` にあり、手元の IAM Identity Center (SSO) の管理者だけが apply する。
 
 [設計書](../architecture.md) / [Operations](../specs/operations.md)
 
@@ -18,7 +18,13 @@ state のバケット・GitHub OIDC のプロバイダー・IAM ロール・予�
    gh api repos/<owner>/<repo> --jq '.owner.id, .id'
    ```
 
-2. 例のファイルをコピーし、値を入れる。どちらもコミットしない (gitignore 済み)
+2. GitHub の OIDC プロバイダーが AWS アカウントにあるか調べる。同じ URL のプロバイダーはアカウントに 1 つしか作れない。すでにあれば参照し (`create_github_oidc_provider = false`)、なければ `true` にして bootstrap で作る
+
+   ```sh
+   aws iam list-open-id-connect-providers
+   ```
+
+3. 例のファイルをコピーし、値を入れる。どちらもコミットしない (gitignore 済み)
 
    ```sh
    cd infra/terraform/initial_setup
@@ -32,6 +38,7 @@ state のバケット・GitHub OIDC のプロバイダー・IAM ロール・予�
 | | `state_bucket_name` | state のバケット名 |
 | | `github_owner` / `github_owner_id` | owner の名前と ID |
 | | `github_repo` / `github_repo_id` | repo の名前と ID |
+| | `create_github_oidc_provider` | OIDC プロバイダーを作るか。既定は `false` (既存を参照) |
 | | `monthly_budget_usd` | 月額の予算 (USD) |
 | | `budget_notification_emails` | 予算の通知先のメール |
 | `backend.hcl` | `bucket` | `state_bucket_name` と同じ値 |
@@ -95,6 +102,7 @@ terraform apply
 
 ## Cautions
 
+- 共有の OIDC プロバイダーは消さない・変えない。どのジョブがどのロールを借りられるかは、各ロールの信頼ポリシーの `sub` で絞る。プロバイダーを共有しても、ほかのリポジトリのジョブは family-video のロールを借りられない
 - `sensitive` が隠すのは表示だけで、state には平文で残る。state は暗号化 (SSE-S3) と権限で守る
 - `pull_request_target`・`workflow_run` のワークフローでは、`id-token: write` と `environment` を使わない。main の文脈でフォークのコードが動き、dev のロールを引き受けられてしまう
 - dev / prod のロールに IAM の権限 (Lambda の実行ロールの作成・`PassRole` など) を足すときは、ロール名の prefix の制限と permissions boundary を条件にする

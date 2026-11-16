@@ -13,6 +13,6 @@ output "role_arns" {
 
 output "oidc_provider_arn" {
   description = "GitHub Actions の OIDC プロバイダーの ARN"
-  value       = module.github_actions_oidc_provider.arn
+  value       = local.github_oidc_provider_arn
   sensitive   = true
 }

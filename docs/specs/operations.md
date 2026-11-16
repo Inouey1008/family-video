@@ -8,7 +8,7 @@
 
 開発者が行う操作を `docs/runbook/` にまとめる (bootstrap だけ作成済み)。
 
-- [bootstrap](../runbook/bootstrap.md) (state のバケット・OIDC・ロール・予算)
+- [bootstrap](../runbook/bootstrap.md) (state のバケット・ロール・予算。GitHub の OIDC プロバイダーは既存を参照し、なければ作る)
 - 家族の招待・アカウントの復旧 (パスキーの再登録・開発者自身の復旧)
 - メンバーの除外 (`cmd/task`)
 - 障害対応

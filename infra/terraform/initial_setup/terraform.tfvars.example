@@ -6,3 +6,4 @@ github_repo                = "<リポジトリ名>"
 github_repo_id             = "<リポジトリの数値 ID>"
 monthly_budget_usd         = 10
 budget_notification_emails = ["<通知先のメールアドレス>"]
+create_github_oidc_provider = false

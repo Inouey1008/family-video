@@ -38,3 +38,9 @@ variable "budget_notification_emails" {
   type        = list(string)
   sensitive   = true
 }
+
+variable "create_github_oidc_provider" {
+  description = "GitHub の OIDC プロバイダーをこの構成で作るか。false の場合はアカウントに既にあるものを参照する"
+  type        = bool
+  default     = false
+}
