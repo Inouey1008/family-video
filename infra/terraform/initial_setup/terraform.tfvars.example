@@ -1,0 +1,9 @@
+aws_account_id             = "<12 桁のアカウント ID>"
+state_bucket_name          = "<state 用のバケット名>"
+github_owner               = "<GitHub の owner 名>"
+github_owner_id            = "<owner の数値 ID>"
+github_repo                = "<リポジトリ名>"
+github_repo_id             = "<リポジトリの数値 ID>"
+monthly_budget_usd         = 10
+budget_notification_emails = ["<通知先のメールアドレス>"]
+create_github_oidc_provider = false

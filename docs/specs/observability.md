@@ -40,6 +40,8 @@ flowchart LR
 | アプリの ERROR ログ・Lambda のエラー・API Gateway の 5xx | 5 分間に 1 件以上 |
 | Lambda のスロットリング | 1 件以上 |
 | Lambda の実行時間 | タイムアウトの 8 割 |
-| AWS Budgets | 月額予算の 80% |
+| AWS Budgets | 月額予算の 80% (family-video のタグが付いた費用だけを数える) |
 | 動画のバケットの保存量 (日次) | 前日より 100 GB 以上増える |
 | 認証の失敗・4xx の急増 | 5 分間に通常の数倍 |
+
+AWS Budgets の通知は、監視 (SNS・Slack) を作るまでは、当面はメールで送る。
