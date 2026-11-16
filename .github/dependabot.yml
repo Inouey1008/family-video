@@ -6,3 +6,9 @@ updates:
       interval: monthly
     commit-message:
       prefix: chore
+  - package-ecosystem: terraform
+    directory: "/terraform/initial_setup"
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: chore
