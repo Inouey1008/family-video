@@ -88,7 +88,8 @@ GitHub Actions で、AWS へは OIDC で接続する。ロールは読み取り�
 
 | ワークフロー | きっかけ | 内容 |
 |---|---|---|
-| `ci.yml` | PR | Terraform の fmt・validate、読み取り専用ロールでの認証の確認。plan と Go のテストは、環境の Terraform と Go のコードを作るときに足す |
+| `ci.yml` | PR | Terraform の fmt・validate、読み取り専用ロールでの認証の確認。Dependabot の PR では Claude のレビュー (結果が pass のときだけ通す)。plan と Go のテストは、環境の Terraform と Go のコードを作るときに足す |
+| `dependabot-auto-merge.yml` | Dependabot の PR | patch と minor の更新だけ auto-merge を有効にする (`ci-ok` が通ったらマージ) |
 | `deploy.yml` (未作成) | main へのマージ / タグ (`v*`) | `dev` / `prod` へデプロイ (下の図) |
 | `task.yml` (未作成) | 手動実行 | `cmd/task` ([Operations](specs/operations.md)) |
 | `e2e.yml` (未作成) | 手動実行 | `dev` への E2E ([Operations](specs/operations.md)) |
@@ -106,3 +107,4 @@ flowchart LR
 - キャッシュの無効化は、`service-worker.js` などの差し替えを反映するため、必要なら行う。ロールバックは、エイリアスを前のバージョンに戻す
 - マイグレーションは、デプロイのジョブが Lambda の更新前に実行する。前のバージョンでも動く形で進める ([Data](specs/data.md))。DSQL は IAM 認証で接続できるので、マイグレーション用の Lambda は持たない
 - 招待と復旧は Cognito のコンソールか CLI で、メンバーの除外は `cmd/task` で行う。管理用の Lambda は持たない
+- Dependabot の自動マージは GITHUB_TOKEN で行うので、main への push で動くワークフロー (将来の `deploy.yml`) は起動しない
