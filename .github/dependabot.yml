@@ -8,11 +8,5 @@ updates:
       default-days: 14
     commit-message:
       prefix: chore
-  - package-ecosystem: terraform
-    directory: "/infra/terraform/initial_setup"
-    schedule:
-      interval: monthly
-    cooldown:
-      default-days: 14
-    commit-message:
-      prefix: chore
+  # infra/terraform/initial_setup (bootstrap) は手元で apply するので、Dependabot の対象にしない。
+  # 版は bootstrap を触るときに手で上げる。terraform は環境 (env/dev・env/prod) を作るときに足す。
