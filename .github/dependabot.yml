@@ -4,11 +4,15 @@ updates:
     directory: "/"
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 14
     commit-message:
       prefix: chore
   - package-ecosystem: terraform
     directory: "/infra/terraform/initial_setup"
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 14
     commit-message:
       prefix: chore
