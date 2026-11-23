@@ -88,7 +88,7 @@ GitHub Actions で、AWS へは OIDC で接続する。ロールは読み取り�
 
 | ワークフロー | きっかけ | 内容 |
 |---|---|---|
-| `ci.yml` (未作成) | PR | `go test`・`govulncheck`・`terraform plan` (読み取り専用。ログには変更の件数だけを出す) |
+| `ci.yml` | PR | Terraform の fmt・validate、読み取り専用ロールでの認証の確認。plan と Go のテストは、環境の Terraform と Go のコードを作るときに足す |
 | `deploy.yml` (未作成) | main へのマージ / タグ (`v*`) | `dev` / `prod` へデプロイ (下の図) |
 | `task.yml` (未作成) | 手動実行 | `cmd/task` ([Operations](specs/operations.md)) |
 | `e2e.yml` (未作成) | 手動実行 | `dev` への E2E ([Operations](specs/operations.md)) |
