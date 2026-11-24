@@ -32,5 +32,6 @@
 | [0026](0026-repository.md) | リポジトリは GitHub の public なモノレポにする | Accepted |
 | [0027](0027-ci-cd.md) | CI/CD は GitHub Actions にし、AWS へは OIDC で認証する | Accepted |
 | [0028](0028-manual-tasks.md) | 手動の作業はコードにして実行し、対話型のコンソールは設けない | Accepted |
+| [0029](0029-playwright.md) | E2E と VRT に Playwright (Node・yarn) を使う | Accepted |
 
 変えるときは ADR を書き換えず、新しい ADR を足して古い ADR の Status を `Superseded by ADR-XXXX` にする。

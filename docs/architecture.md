@@ -10,7 +10,9 @@
 | [data.md](specs/data.md) | 保存する情報・削除・バックアップ・保存料 |
 | [security.md](specs/security.md) | 認証・配信・権限・攻撃への対策 |
 | [observability.md](specs/observability.md) | ログ・アラーム・通知 |
-| [operations.md](specs/operations.md) | Runbook・手動の作業・テスト |
+| [backend.md](specs/backend.md) | Go のバックエンドの構成・ビルド・DSQL への接続・マイグレーション |
+| [testing.md](specs/testing.md) | テストの種類・場所・タイミング |
+| [operations.md](specs/operations.md) | Runbook・手動の作業 |
 
 ## Architecture
 
