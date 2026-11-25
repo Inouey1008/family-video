@@ -24,7 +24,7 @@
 | [0018](0018-no-custom-domain.md) | 独自ドメインは使わず、CloudFront の既定の URL を使う | Accepted |
 | [0019](0019-video-transfer.md) | 動画の配信とアップロードは、署名付き URL で行う | Accepted |
 | [0020](0020-origin-lock.md) | API への入り口は、秘密のヘッダーで CloudFront に限る | Accepted |
-| [0021](0021-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted |
+| [0021](0021-attack-protection.md) | 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う | Accepted (dev は [0030](0030-dev-no-geo-restriction.md) で変更) |
 | [0022](0022-observability.md) | ログとアラームは CloudWatch の標準機能だけで作る | Accepted |
 | [0023](0023-notification.md) | 通知は Amazon Q Developer 経由で Slack に送る | Accepted |
 | [0024](0024-iac-terraform.md) | インフラは Terraform で構築する | Accepted |
@@ -32,5 +32,7 @@
 | [0026](0026-repository.md) | リポジトリは GitHub の public なモノレポにする | Accepted |
 | [0027](0027-ci-cd.md) | CI/CD は GitHub Actions にし、AWS へは OIDC で認証する | Accepted |
 | [0028](0028-manual-tasks.md) | 手動の作業はコードにして実行し、対話型のコンソールは設けない | Accepted |
+| [0029](0029-backend-onion.md) | バックエンドはオニオンアーキテクチャ (DDD) で作る | Accepted |
+| [0030](0030-dev-no-geo-restriction.md) | dev の CloudFront には地域制限をかけない | Accepted |
 
 変えるときは ADR を書き換えず、新しい ADR を足して古い ADR の Status を `Superseded by ADR-XXXX` にする。

@@ -1,6 +1,6 @@
 # ADR-0021: 攻撃への対策は WAF を使わず、スロットリングと地域制限で行う
 
-- Status: Accepted
+- Status: Accepted (dev の地域制限は [ADR-0030](0030-dev-no-geo-restriction.md) で変更)
 - Date: 2026-11-15
 
 ## Context

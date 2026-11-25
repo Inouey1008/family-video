@@ -23,4 +23,4 @@
 ## Consequences
 
 - Windows・Android は対象外。iPhone で撮った HEVC の動画を再生できないブラウザが多い。必要になったら、カメラの設定を H.264 にするか、サーバー側の変換を足す。
-- 実機での確認項目は [設計書](../specs/operations.md) を参照。
+- 実機での確認項目は [Testing](../specs/testing.md) を参照。

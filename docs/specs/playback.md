@@ -40,7 +40,7 @@ sequenceDiagram
 - 一覧で複数の動画を選び、1 本ずつ順に、元のファイルのまま保存する。ZIP にはせず、サーバー側でまとめる処理は持たない
 - 動画ごとに保存用の署名付き URL を取って取得する。URL に `response-content-disposition=attachment` を付け、端末に保存させる
 - CloudFront は、このクエリ文字列をオリジン (S3) に渡す。再生用の URL とはキャッシュを分ける
-- iOS の Safari で保存できるかは、リリース前に実機で確かめる ([Operations](operations.md))
+- iOS の Safari で保存できるかは、リリース前に実機で確かめる ([Testing](testing.md))
 
 ## Favorites
 
