@@ -1,6 +1,6 @@
 # Operations
 
-[設計書](../architecture.md) の詳細。手動で行う作業とテスト。
+[設計書](../architecture.md) の詳細。手動で行う作業。テストは [Testing](testing.md) にある。
 
 判断の理由: [ADR-0025](../adr/0025-environments.md) / [ADR-0028](../adr/0028-manual-tasks.md)
 
@@ -28,11 +28,3 @@
 
 - データを見るだけなら、手元の `psql` から、IAM 認証のトークン (`aws dsql generate-db-connect-auth-token`) で DSQL に接続する
 - 確認用に、SELECT だけできる DB のロールを用意する
-
-## Testing
-
-- Go の単体テストと、ローカルの PostgreSQL を使った結合テストを CI で実行する
-- E2E は Playwright の WebKit (Safari のエンジン) で `dev` を操作する。CI には組み込まず、`e2e.yml` (workflow_dispatch) か手元から手動で実行する
-- E2E の対象は一覧・再生・お気に入り・削除と復元・小さな動画のアップロード。ログインは `dev` にだけ作ったテスト用の家族で、予備のパスワードと TOTP を使う (秘密は GitHub のシークレット)
-- パスキー・ホーム画面からの起動・アプリを離れたときの中断は自動で試せないので、iPhone で手動確認する
-- リリース前に iPhone で手動確認する (ログイン・複数アップロード・再開・再生・選んだ動画の保存・ホーム画面からの起動)

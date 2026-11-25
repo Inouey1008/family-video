@@ -2,7 +2,7 @@
 
 [設計書](../architecture.md) の詳細。認証・配信・権限・攻撃への対策。
 
-判断の理由: [ADR-0009](../adr/0009-auth-cognito.md) / [ADR-0010](../adr/0010-login-passkey.md) / [ADR-0011](../adr/0011-session-cookie.md) / [ADR-0016](../adr/0016-entry.md) / [ADR-0019](../adr/0019-video-transfer.md) / [ADR-0021](../adr/0021-attack-protection.md) / [ADR-0020](../adr/0020-origin-lock.md)
+判断の理由: [ADR-0009](../adr/0009-auth-cognito.md) / [ADR-0010](../adr/0010-login-passkey.md) / [ADR-0011](../adr/0011-session-cookie.md) / [ADR-0016](../adr/0016-entry.md) / [ADR-0019](../adr/0019-video-transfer.md) / [ADR-0021](../adr/0021-attack-protection.md) / [ADR-0020](../adr/0020-origin-lock.md) / [ADR-0030](../adr/0030-dev-no-geo-restriction.md)
 
 ## Authentication
 
@@ -98,6 +98,6 @@ WAF は使わず、地域制限 → スロットリング → オリジン検証
 - 値の確かめ方: dev で負荷をかけ、上限で `429` が返ることと、普段の操作で当たらないことを確かめる。使い始めたら CloudWatch で、API Gateway の `Count`・`4xx` と、Lambda の `ConcurrentExecutions`・`Duration`・`Throttles` の最大を見て直す
 - `POST /api/client-log` は、Lambda 内のトークンバケットとサイズの上限でも制限する
 - ログインの総当たりは、Cognito のロック機能 (5 回の失敗で 1 秒、失敗のたびに倍、最大約 15 分) で防ぐ
-- CloudFront の地域制限で `JP` だけを許可する
+- CloudFront の地域制限で、prod は `JP` だけを許可する。dev は地域制限をかけない (GitHub のランナーからスモークテストと E2E を通すため。[ADR-0030](../adr/0030-dev-no-geo-restriction.md))
 - CloudFront がオリジンへ付ける `X-Origin-Verify` を、Lambda の middleware が最初に検証し、不一致は `403`。API Gateway の URL への直接アクセスで、地域制限を回避されない。値は SSM Parameter Store に置き、定期的に入れ替える。入れ替えの間は新旧どちらの値も受け付け、CloudFront の切り替えが終わってから古い値を消す
 - 海外旅行のときは、Terraform で旅行先の国を一時的に許可する。iCloud プライベートリレーが日本と判定されるかを、リリース前に確認する

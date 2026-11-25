@@ -7,10 +7,13 @@
 | [ui.md](specs/ui.md) | 画面の一覧・遷移・画面ごとの要素と状態 |
 | [upload.md](specs/upload.md) | アップロード・再開 |
 | [playback.md](specs/playback.md) | 一覧・再生・ダウンロード・お気に入り |
+| [domain.md](specs/domain.md) | 業務の言葉・集約・不変条件 |
+| [backend.md](specs/backend.md) | Go のコードの構成 |
+| [testing.md](specs/testing.md) | テストの種類・場所・タイミング |
 | [data.md](specs/data.md) | 保存する情報・削除・バックアップ・保存料 |
 | [security.md](specs/security.md) | 認証・配信・権限・攻撃への対策 |
 | [observability.md](specs/observability.md) | ログ・アラーム・通知 |
-| [operations.md](specs/operations.md) | Runbook・手動の作業・テスト |
+| [operations.md](specs/operations.md) | Runbook・手動の作業 |
 
 ## Architecture
 
@@ -44,7 +47,7 @@ flowchart LR
 | 区分 | 技術 | ADR |
 |---|---|---|
 | FE | `html/template` + htmx。MPA (HTML はサーバーが組み立てる) | [0004](adr/0004-mpa.md) / [0008](adr/0008-htmx.md) |
-| BE | Go (Lambda 1 つ) | [0005](adr/0005-backend-go.md) / [0006](adr/0006-lambda.md) |
+| BE | Go (Lambda 1 つ) | [0005](adr/0005-backend-go.md) / [0006](adr/0006-lambda.md) / [0029](adr/0029-backend-onion.md) |
 | API | API Gateway (HTTP API) | [0017](adr/0017-api-http.md) |
 | DB | Aurora DSQL | [0012](adr/0012-database-dsql.md) / [0013](adr/0013-database-backup.md) |
 | 認証 | Cognito (パスキー)・HttpOnly Cookie | [0009](adr/0009-auth-cognito.md) / [0010](adr/0010-login-passkey.md) / [0011](adr/0011-session-cookie.md) |
@@ -92,7 +95,7 @@ GitHub Actions で、AWS へは OIDC で接続する。ロールは読み取り�
 | `dependabot-auto-merge.yml` | Dependabot の PR | patch と minor の更新だけ auto-merge を有効にする (`ci-ok` が通ったらマージ) |
 | `deploy.yml` (未作成) | main へのマージ / タグ (`v*`) | `dev` / `prod` へデプロイ (下の図) |
 | `task.yml` (未作成) | 手動実行 | `cmd/task` ([Operations](specs/operations.md)) |
-| `e2e.yml` (未作成) | 手動実行 | `dev` への E2E ([Operations](specs/operations.md)) |
+| `e2e.yml` (未作成) | 手動実行 | `dev` への E2E ([Testing](specs/testing.md)) |
 
 ```mermaid
 flowchart LR
@@ -101,6 +104,7 @@ flowchart LR
   M --> L["Lambda の新しいバージョンを発行し、エイリアスを切り替え"]
   L --> S["static の S3 同期"]
   S --> I["CloudFront のキャッシュの無効化 (必要なら)"]
+  I --> T["スモークテスト (dev だけ。/auth/login が 302)"]
 ```
 
 - `prod` の Environment は、タグ (`v*`) からの実行だけを受け付け、Actions の画面で承認するまで止まる。`task.yml` も、実行するときにリリースのタグを選ぶ
